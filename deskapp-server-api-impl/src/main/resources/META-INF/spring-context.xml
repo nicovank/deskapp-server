@@ -21,11 +21,9 @@
 
 	<jaxrs:server id="api" address="/api">
 
-		<!--
 		<jaxrs:serviceBeans>
-			<ref bean=""/>
+			<ref bean="communication"/>
 		</jaxrs:serviceBeans>
-		-->
 
 	</jaxrs:server>
 
