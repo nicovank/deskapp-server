@@ -1,4 +1,4 @@
-package com.oswego.reslife.deskapp.api.impl;
+package com.oswego.reslife.deskapp.api;
 
 import org.springframework.stereotype.Service;
 
