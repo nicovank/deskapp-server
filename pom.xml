@@ -80,11 +80,6 @@
 			</dependency>
 			<dependency>
 				<groupId>com.oswego.reslife.deskapp</groupId>
-				<artifactId>deskapp-server-api-impl</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.oswego.reslife.deskapp</groupId>
 				<artifactId>deskapp-server-webapp</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
@@ -203,7 +198,6 @@
 
 	<modules>
 		<module>deskapp-server-api</module>
-		<module>deskapp-server-api-impl</module>
 		<module>deskapp-server-webapp</module>
 		<module>deskapp-server-webapp-exec</module>
 		<module>deskapp-server-webapp-it</module>

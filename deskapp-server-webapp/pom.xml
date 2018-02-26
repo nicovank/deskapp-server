@@ -40,10 +40,6 @@
 			<artifactId>deskapp-server-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.oswego.reslife.deskapp</groupId>
-			<artifactId>deskapp-server-api-impl</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>jsr311-api</artifactId>
 		</dependency>
