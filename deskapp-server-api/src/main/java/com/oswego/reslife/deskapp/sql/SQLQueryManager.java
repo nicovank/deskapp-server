@@ -1,4 +1,4 @@
-package com.oswego.reslife.deskapp.api.sql;
+package com.oswego.reslife.deskapp.sql;
 
 import java.io.File;
 import java.io.FileNotFoundException;

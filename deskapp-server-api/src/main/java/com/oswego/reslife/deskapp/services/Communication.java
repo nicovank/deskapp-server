@@ -1,4 +1,4 @@
-package com.oswego.reslife.deskapp.api;
+package com.oswego.reslife.deskapp.services;
 
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 @Service("communication")
 @Path("communication")
-public class DefaultCommunicationService {
+public class Communication {
 
 	@Path("list")
 	@POST
