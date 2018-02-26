@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Rents (
 
 	PRIMARY KEY (ID),
 	FOREIGN KEY (Equipment_ID) REFERENCES Equipments (ID),
-	FOREIGN KEY (Resident_ID) REFERENCES Residents (ID),
-	FOREIGN KEY (Employee_Out) REFERENCES Employees (ID),
-	FOREIGN KEY (Employee_In) REFERENCES Employees (ID)
+	FOREIGN KEY (Resident_ID)  REFERENCES Residents  (ID),
+	FOREIGN KEY (Employee_Out) REFERENCES Employees  (ID),
+	FOREIGN KEY (Employee_In)  REFERENCES Employees  (ID)
 );
