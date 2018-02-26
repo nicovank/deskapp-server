@@ -1,4 +1,4 @@
-CREATE TABLE Residents (
+CREATE TABLE IF NOT EXISTS Residents (
 	ID          VARCHAR(10)  NOT NULL,
 	First_Name  VARCHAR(35)  NOT NULL, -- Arbitrary 35
 	Last_Name   VARCHAR(35)  NOT NULL,

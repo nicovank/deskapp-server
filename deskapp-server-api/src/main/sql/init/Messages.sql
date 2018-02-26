@@ -1,4 +1,4 @@
-CREATE TABLE Messages (
+CREATE TABLE IF NOT EXISTS Messages (
 	ID          INT AUTO_INCREMENT NOT NULL,
 	Building_ID VARCHAR(15)        NOT NULL,
 	Employee_ID VARCHAR(10)        NOT NULL,
