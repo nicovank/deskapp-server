@@ -1,12 +1,11 @@
 package com.oswego.reslife.deskapp.sql;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.NotDirectoryException;
-import java.nio.file.Paths;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.*;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This helper class will allow to put SQL queries in separate files,
@@ -22,7 +21,7 @@ import java.util.HashMap;
 public class SQLQueryManager {
 
 	// Where the queries and their id will be stored
-	HashMap<String, String> queries = new HashMap<>();
+	private HashMap<String, String> queries = new HashMap<>();
 
 	private static final String FILE_EXTENSION = ".sql";
 
@@ -34,7 +33,14 @@ public class SQLQueryManager {
 	 */
 	public SQLQueryManager(String path) throws IOException {
 		// Start loading queries from the root directory.
-		walkDirectory(new File(path), new String[0]);
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		try {
+			URI absolutePathURI = Objects.requireNonNull(loader.getResource("sql")).toURI();
+			Path absolutePath = Paths.get(absolutePathURI);
+			walkDirectory(absolutePath, new String[0]);
+		} catch (URISyntaxException e) {
+			throw new IOException();
+		}
 	}
 
 	/**
@@ -55,39 +61,30 @@ public class SQLQueryManager {
 	 * @param prefix    The current prefix of visited directories.
 	 * @throws IOException if the given path is not a directory, or cannot be found, or other problem reading the files.
 	 */
-	private void walkDirectory(File directory, String[] prefix) throws IOException {
-		if (!directory.exists()) {
-			throw new FileNotFoundException();
-		}
+	private void walkDirectory(Path directory, String[] prefix) throws IOException {
 
-		if (!directory.isDirectory()) {
-			throw new NotDirectoryException(directory.getAbsolutePath());
-		}
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
+			for (Path entry : stream) {
+				if (Files.isDirectory(entry)) {
+					// Recursively walk through the directories
+					String[] newPrefix = new String[prefix.length + 1];
+					System.arraycopy(prefix, 0, newPrefix, 0, prefix.length);
+					newPrefix[prefix.length] = entry.getFileName().toString();
+					walkDirectory(entry, newPrefix);
 
-		File[] SQLFiles = directory.listFiles(file -> file.getName().endsWith(FILE_EXTENSION));
-		File[] subdirectories = directory.listFiles(File::isDirectory);
+				} else {
+					if (entry.toString().endsWith(FILE_EXTENSION)) {
+						String id = entry.getFileName().toString().replace(FILE_EXTENSION, "");
 
-		if (SQLFiles != null) {
-			for (File queryFile : SQLFiles) {
+						if (prefix.length != 0) {
+							// If there were subdirectories, prepend them to the id.
+							id = String.join(".", prefix) + "." + id;
+						}
 
-				String id = queryFile.getName().replace(FILE_EXTENSION, "");
-				;
-				if (prefix.length != 0) {
-					// If there were subdirectories, prepend them to the id.
-					id = String.join(".", prefix) + "." + id;
+						String content = readFile(entry.toAbsolutePath().toString());
+						queries.put(id, content);
+					}
 				}
-
-				String content = readFile(queryFile.getPath());
-
-				queries.put(id, content);
-			}
-		}
-
-		if (subdirectories != null) {
-			for (File subdirectory : subdirectories) {
-				String[] newPrefix = new String[prefix.length + 1];
-				System.arraycopy(prefix, 0, newPrefix, 0, prefix.length);
-				walkDirectory(subdirectory, newPrefix);
 			}
 		}
 	}
