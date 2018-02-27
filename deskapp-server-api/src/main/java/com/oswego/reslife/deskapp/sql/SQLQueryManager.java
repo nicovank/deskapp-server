@@ -15,6 +15,7 @@ import java.util.Objects;
  * The given directory will be recursively traversed, and the id of any given file will
  * be its path from the root, with directories concatenated using periods.
  *
+ * <p>
  * For example, a file stored in <code>ROOT/init/table.sql</code> can be fetched using
  * <code>getSQLQuery("init.table")</code>.
  */
