@@ -195,6 +195,5 @@
 		<module>deskapp-server-api</module>
 		<module>deskapp-server-webapp</module>
 		<module>deskapp-server-webapp-exec</module>
-		<module>deskapp-server-webapp-it</module>
 	</modules>
 </project>

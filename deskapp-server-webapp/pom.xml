@@ -64,6 +64,7 @@
 					<configuration>
 						<port>9090</port>
 						<path>/</path>
+						<warSourceDirectory>${project.basedir}/src/main/webapp/build</warSourceDirectory>
 					</configuration>
 				</plugin>
 			</plugins>
