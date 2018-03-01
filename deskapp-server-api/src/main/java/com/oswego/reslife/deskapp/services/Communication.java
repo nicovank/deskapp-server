@@ -1,6 +1,5 @@
 package com.oswego.reslife.deskapp.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oswego.reslife.deskapp.sql.SQLQueryManager;
 import com.oswego.reslife.deskapp.sql.SQLService;
 import com.oswego.reslife.deskapp.sql.models.Message;
@@ -13,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +33,7 @@ public class Communication {
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public void listMessages(@RequestBody String body) {
+	public ArrayList<Message> listMessages(Request req) {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -64,8 +64,7 @@ public class Communication {
 				messages.add(message);
 			}
 
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.writeValue(System.out, messages);
+			return messages;
 
 		} catch (IOException | SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -79,5 +78,7 @@ public class Communication {
 
 			}
 		}
+
+		return null;
 	}
 }

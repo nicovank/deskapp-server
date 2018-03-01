@@ -21,6 +21,10 @@
 
 	<jaxrs:server id="api" address="/">
 
+		<jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+		</jaxrs:providers>
+
 		<jaxrs:serviceBeans>
 			<ref bean="communication"/>
 		</jaxrs:serviceBeans>
