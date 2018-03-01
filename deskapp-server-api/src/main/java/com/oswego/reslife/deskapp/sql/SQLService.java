@@ -1,6 +1,5 @@
 package com.oswego.reslife.deskapp.sql;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -29,6 +28,8 @@ public abstract class SQLService {
 		}
 
 		try {
+			databaseProperties = new Properties();
+
 			ClassLoader loader = Thread.currentThread().getContextClassLoader();
 			Objects.requireNonNull(loader.getResource(DB_PROPERTIES_PATH)).openStream();
 			InputStream input = Objects.requireNonNull(loader.getResource(DB_PROPERTIES_PATH)).openStream();

@@ -13,6 +13,7 @@
 
 	<build>
 		<plugins>
+			<!--
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
@@ -55,6 +56,7 @@
 					<installDirectory>target</installDirectory>
 				</configuration>
 			</plugin>
+			-->
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -64,7 +66,9 @@
 					<configuration>
 						<port>9090</port>
 						<path>/</path>
+						<!--
 						<warSourceDirectory>${project.basedir}/src/main/webapp/build</warSourceDirectory>
+						-->
 					</configuration>
 				</plugin>
 			</plugins>
