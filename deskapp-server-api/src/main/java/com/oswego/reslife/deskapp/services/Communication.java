@@ -3,6 +3,7 @@ package com.oswego.reslife.deskapp.services;
 import com.oswego.reslife.deskapp.sql.SQLQueryManager;
 import com.oswego.reslife.deskapp.sql.SQLService;
 import com.oswego.reslife.deskapp.sql.models.Message;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -12,7 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,16 +24,27 @@ import java.util.ArrayList;
 public class Communication {
 
 	/**
+	 * The request class that will be used by the listMessages method.
+	 */
+	private static final class ListRequest {
+		@JsonProperty("page")
+		int page;
+	}
+
+	private static final int MESSAGES_PER_PAGE = 10;
+
+	/**
 	 * Handles POST requests to /communication/list.
 	 * Reads the latest messages for a particular building.
 	 *
-	 * @param body     The body of the request, that will be parsed using Jackson.
+	 * @param req The request sent by the client
+	 * @return An list of the latest messages
 	 */
 	@Path("list")
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public ArrayList<Message> listMessages(Request req) {
+	public ArrayList<Message> listMessages(ListRequest req) {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -46,8 +57,8 @@ public class Communication {
 
 			statement = connection.prepareStatement(manager.getSQLQuery("communication.get.messages"));
 			statement.setString(1, "MACKIN");
-			statement.setInt(2, 0);
-			statement.setInt(3, 10);
+			statement.setInt(2, req.page * MESSAGES_PER_PAGE);
+			statement.setInt(3, (req.page + 1) * MESSAGES_PER_PAGE);
 			results = statement.executeQuery();
 
 			ArrayList<Message> messages = new ArrayList<>();
