@@ -36,7 +36,7 @@ public class SQLQueryManager {
 		// Start loading queries from the root directory.
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		try {
-			URI absolutePathURI = Objects.requireNonNull(loader.getResource("sql")).toURI();
+			URI absolutePathURI = Objects.requireNonNull(loader.getResource(path)).toURI();
 			Path absolutePath = Paths.get(absolutePathURI);
 			walkDirectory(absolutePath, new String[0]);
 		} catch (URISyntaxException e) {
