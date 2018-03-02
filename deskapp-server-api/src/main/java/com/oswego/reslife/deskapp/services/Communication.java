@@ -3,9 +3,10 @@ package com.oswego.reslife.deskapp.services;
 import com.oswego.reslife.deskapp.sql.SQLQueryManager;
 import com.oswego.reslife.deskapp.sql.SQLService;
 import com.oswego.reslife.deskapp.sql.models.Message;
+import com.oswego.reslife.deskapp.utils.Error;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -44,11 +45,12 @@ public class Communication {
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public ArrayList<Message> listMessages(ListRequest req) {
+	public Object listMessages(ListRequest req) {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet results = null;
+		String errorMessage = null;
 
 		try {
 
@@ -79,6 +81,7 @@ public class Communication {
 
 		} catch (IOException | SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
+			errorMessage = e.getLocalizedMessage();
 		} finally {
 			// Close all connections
 			try {
@@ -90,6 +93,6 @@ public class Communication {
 			}
 		}
 
-		return null;
+		return new Error(errorMessage);
 	}
 }
