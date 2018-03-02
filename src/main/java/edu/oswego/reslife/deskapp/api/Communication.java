@@ -5,10 +5,7 @@ import edu.oswego.reslife.deskapp.errors.InternalError;
 import edu.oswego.reslife.deskapp.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.sql.SQLQueryManager;
 import edu.oswego.reslife.deskapp.sql.models.Message;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -39,7 +36,7 @@ public class Communication {
 	 * @return An list of the latest messages
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public ArrayList<Message> listMessages(ListRequest req) {
+	public ArrayList<Message> listMessages(@RequestBody ListRequest req) {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
