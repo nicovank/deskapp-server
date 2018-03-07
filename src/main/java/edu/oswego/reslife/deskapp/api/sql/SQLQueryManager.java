@@ -1,4 +1,4 @@
-package edu.oswego.reslife.deskapp.sql;
+package edu.oswego.reslife.deskapp.api.sql;
 
 import java.io.IOException;
 import java.net.URI;

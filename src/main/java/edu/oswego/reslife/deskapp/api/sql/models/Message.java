@@ -1,4 +1,4 @@
-package edu.oswego.reslife.deskapp.sql.models;
+package edu.oswego.reslife.deskapp.api.sql.models;
 
 import java.sql.Timestamp;
 
