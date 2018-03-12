@@ -4,14 +4,27 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
+	<!-- Servlets -->
 	<servlet>
 		<servlet-name>ListMessages</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.ListMessages</servlet-class>
 	</servlet>
 
+	<!-- Filters -->
+	<filter>
+		<filter-name>ApiFilter</filter-name>
+		<filter-class>edu.oswego.reslife.deskapp.filters.ApiFilter</filter-class>
+	</filter>
+
+	<!-- Servlet mappings -->
 	<servlet-mapping>
 		<servlet-name>ListMessages</servlet-name>
 		<url-pattern>/api/communication/list</url-pattern>
 	</servlet-mapping>
 
+	<!-- Filter mappings -->
+	<filter-mapping>
+		<filter-name>ApiFilter</filter-name>
+		<url-pattern>/api/*</url-pattern>
+	</filter-mapping>
 </web-app>
