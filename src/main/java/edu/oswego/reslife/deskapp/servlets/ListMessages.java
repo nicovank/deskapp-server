@@ -25,6 +25,7 @@ public class ListMessages extends HttpServlet {
 
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
+			throw new ServletException("There was an error connecting to the database.", e);
 		}
 	}
 
