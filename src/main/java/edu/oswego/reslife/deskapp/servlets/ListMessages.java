@@ -3,6 +3,7 @@ package edu.oswego.reslife.deskapp.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.oswego.reslife.deskapp.api.Communication;
 import edu.oswego.reslife.deskapp.api.sql.models.Message;
+import edu.oswego.reslife.deskapp.servlets.requests.ListMessagesRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,17 +15,18 @@ import java.sql.SQLException;
 public class ListMessages extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
+		ObjectMapper mapper = new ObjectMapper();
+		ListMessagesRequest req = mapper.readValue(request.getReader(), ListMessagesRequest.class);
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 
-			Message[] messages = Communication.listMessages(0, "MACKIN");
-			ObjectMapper mapper = new ObjectMapper();
+			Message[] messages = Communication.listMessages(req.getPage(), req.getBuilding());
 			mapper.writeValue(response.getOutputStream(), messages);
 
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
+
+	// We do not accept any other type of request than POST.
 }
