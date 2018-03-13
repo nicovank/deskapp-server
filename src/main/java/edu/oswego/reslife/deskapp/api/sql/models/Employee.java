@@ -35,7 +35,7 @@ public class Employee {
 	}
 
 	/**
-	 * Utility, sets the position from the string.
+	 * Utility, sets the position from the string representation of the enum's value of the employee's position.
 	 *
 	 * @param position a string representing the position of the employee.
 	 */
