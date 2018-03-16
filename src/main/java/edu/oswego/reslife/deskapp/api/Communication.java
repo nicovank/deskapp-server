@@ -54,7 +54,7 @@ public class Communication {
 			connection = SQLConnection.getSQLConnection();
 			SQLQueryManager manager = SQLConnection.getManager();
 
-			statement = connection.prepareStatement(manager.getSQLQuery("communication.get.messages"));
+			statement = connection.prepareStatement(manager.getSQLQuery("communication.list"));
 			statement.setString(1, buildingID);
 			statement.setInt(2, page * messagesPerPage);
 			statement.setInt(3, (page + 1) * messagesPerPage);
