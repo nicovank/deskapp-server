@@ -71,6 +71,7 @@ public class ArrayPlus<T> {
 	 * @param position the position lo look up.
 	 * @return the element at the given position.
 	 */
+	@SuppressWarnings("unchecked")
 	public T get(int position) {
 		if (position >= 0 && position <= (upperBound - lowerBound)) {
 			return (T) array[lowerBound + position];
@@ -86,6 +87,7 @@ public class ArrayPlus<T> {
 	 * @param upperBound the upper bound of the slice, exclusive.
 	 * @return the sliced ArrayPlus.
 	 */
+	@SuppressWarnings("unchecked")
 	public ArrayPlus<T> slice(int lowerBound, int upperBound) {
 		if (upperBound < lowerBound) {
 			throw new NegativeArraySizeException();
@@ -93,7 +95,7 @@ public class ArrayPlus<T> {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 
-		return new ArrayPlus<T>((T[]) array, this.lowerBound + lowerBound, this.lowerBound + upperBound);
+		return new ArrayPlus<>((T[]) array, this.lowerBound + lowerBound, this.lowerBound + upperBound);
 	}
 
 	/**
