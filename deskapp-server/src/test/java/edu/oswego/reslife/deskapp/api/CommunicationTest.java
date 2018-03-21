@@ -1,6 +1,6 @@
 package edu.oswego.reslife.deskapp.api;
 
-import edu.oswego.reslife.deskapp.api.sql.models.Message;
+import edu.oswego.reslife.deskapp.api.models.Message;
 import org.junit.jupiter.api.Test;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 

@@ -1,8 +1,9 @@
 package edu.oswego.reslife.deskapp.api;
 
+import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.api.sql.SQLQueryManager;
-import edu.oswego.reslife.deskapp.api.sql.models.Message;
+import edu.oswego.reslife.deskapp.api.models.Message;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -27,7 +28,9 @@ public class Communication {
 	 * @throws IOException            if there was a problem accessing the local disk.
 	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
 	 */
-	public static Message[] listMessages(int page, String buildingID) throws SQLException, IOException, ClassNotFoundException {
+	public static Message[] listMessages(int page, String buildingID)
+			throws SQLException, IOException, ClassNotFoundException {
+
 		return listMessages(page, buildingID, DEFAULT_MESSAGES_PER_PAGE);
 	}
 
@@ -44,7 +47,9 @@ public class Communication {
 	 * @throws IOException            if there was a problem accessing the local disk.
 	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
 	 */
-	public static Message[] listMessages(int page, String buildingID, int messagesPerPage) throws SQLException, IOException, ClassNotFoundException {
+	public static Message[] listMessages(int page, String buildingID, int messagesPerPage)
+			throws SQLException, IOException, ClassNotFoundException {
+
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet results = null;
@@ -82,13 +87,74 @@ public class Communication {
 			throw e;
 		} finally {
 			// Close all connections
-			try {
-				if (results != null) results.close();
-				if (statement != null) statement.close();
-				if (connection != null) connection.close();
-			} catch (SQLException ignored) {
+			closeConnections(connection, statement, results);
+		}
+	}
 
-			}
+	/**
+	 * Adds a new message into the database, from the given employee.
+	 *
+	 * @param employee the employee that posted the message.
+	 * @param message  the message to save.
+	 * @return a boolean indicating the success of the operation.
+	 * @throws SQLException           if there was a problem connection with the database or executing the query.
+	 * @throws IOException            if there was a problem accessing the local disk.
+	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 */
+	public static boolean addMessage(Employee employee, String message)
+			throws SQLException, IOException, ClassNotFoundException {
+
+		return addMessage(employee.getID(), message);
+	}
+
+	/**
+	 * Adds a new message into the database, from the given employee.
+	 *
+	 * @param employee the employee that posted the message.
+	 * @param message  the message to save.
+	 * @return a boolean indicating the success of the operation.
+	 * @throws SQLException           if there was a problem connection with the database or executing the query.
+	 * @throws IOException            if there was a problem accessing the local disk.
+	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 */
+	public static boolean addMessage(String employee, String message)
+			throws SQLException, IOException, ClassNotFoundException {
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+
+		try {
+			connection = SQLConnection.getSQLConnection();
+			SQLQueryManager manager = SQLConnection.getManager();
+
+			statement = connection.prepareStatement(manager.getSQLQuery("communication.add"));
+			statement.setString(1, employee);
+			statement.setString(2, message);
+
+			return statement.executeUpdate() == 1;
+
+		} catch (IOException | SQLException | ClassNotFoundException e) {
+			throw e;
+		} finally {
+			// Close all connections
+			closeConnections(connection, statement, null);
+		}
+	}
+
+	/**
+	 * Closes all open connections when done with SQL Query
+	 *
+	 * @param connection
+	 * @param statement
+	 * @param results
+	 */
+	private static void closeConnections(Connection connection, PreparedStatement statement, ResultSet results) {
+		try {
+			if (results != null) results.close();
+			if (statement != null) statement.close();
+			if (connection != null) connection.close();
+		} catch (SQLException ignored) {
+
 		}
 	}
 }

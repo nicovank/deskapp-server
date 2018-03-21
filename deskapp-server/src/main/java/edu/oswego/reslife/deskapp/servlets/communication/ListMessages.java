@@ -1,8 +1,8 @@
-package edu.oswego.reslife.deskapp.servlets;
+package edu.oswego.reslife.deskapp.servlets.communication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.oswego.reslife.deskapp.api.Communication;
-import edu.oswego.reslife.deskapp.api.sql.models.Message;
+import edu.oswego.reslife.deskapp.api.models.Message;
 import edu.oswego.reslife.deskapp.servlets.requests.ListMessagesRequest;
 
 import javax.servlet.ServletException;

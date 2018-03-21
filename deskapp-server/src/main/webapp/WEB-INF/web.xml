@@ -7,7 +7,12 @@
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>ListMessages</servlet-name>
-		<servlet-class>edu.oswego.reslife.deskapp.servlets.ListMessages</servlet-class>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.communication.ListMessages</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>AddMessage</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.communication.AddMessage</servlet-class>
 	</servlet>
 
 	<!-- Filters -->
@@ -20,6 +25,11 @@
 	<servlet-mapping>
 		<servlet-name>ListMessages</servlet-name>
 		<url-pattern>/api/communication/list</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AddMessage</servlet-name>
+		<url-pattern>/api/communication/add</url-pattern>
 	</servlet-mapping>
 
 	<!-- Filter mappings -->

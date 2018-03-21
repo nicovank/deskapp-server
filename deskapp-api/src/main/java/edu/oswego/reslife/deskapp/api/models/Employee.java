@@ -1,4 +1,4 @@
-package edu.oswego.reslife.deskapp.api.sql.models;
+package edu.oswego.reslife.deskapp.api.models;
 
 public class Employee {
 
