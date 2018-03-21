@@ -17,7 +17,6 @@
 	<modules>
 		<module>deskapp-api</module>
 		<module>deskapp-server</module>
-		<module>deskapp-cli</module>
 	</modules>
 
 	<dependencies>
