@@ -17,8 +17,8 @@
 
 	<!-- Filters -->
 	<filter>
-		<filter-name>ApiFilter</filter-name>
-		<filter-class>edu.oswego.reslife.deskapp.filters.ApiFilter</filter-class>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>edu.oswego.reslife.deskapp.filters.LoginFilter</filter-class>
 	</filter>
 
 	<!-- Servlet mappings -->
@@ -34,7 +34,12 @@
 
 	<!-- Filter mappings -->
 	<filter-mapping>
-		<filter-name>ApiFilter</filter-name>
+		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/api/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/staff/*</url-pattern>
 	</filter-mapping>
 </web-app>
