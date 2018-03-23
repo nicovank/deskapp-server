@@ -92,6 +92,8 @@ public class Users {
 			connection = SQLConnection.getSQLConnection();
 			SQLQueryManager manager = SQLConnection.getManager();
 
+			String hashed = BCrypt.hashpw(employee.getPassword(), BCrypt.gensalt());
+
 			statement = connection.prepareStatement(manager.getSQLQuery("employees.create"));
 			statement.setString(1, employee.getID());
 			statement.setString(2, employee.getBuilding());
@@ -99,7 +101,7 @@ public class Users {
 			statement.setString(4, employee.getLastName());
 			statement.setString(5, employee.getPosition().name());
 			statement.setString(6, employee.getEmail());
-			statement.setString(7, employee.getHashedPassword());
+			statement.setString(7, hashed);
 			statement.setString(8, employee.getPhoneNb());
 
 			return statement.executeUpdate() == 1;

@@ -17,7 +17,9 @@ public class Login extends HttpServlet {
 			Employee employee = Users.login(request.getParameter("user"), request.getParameter("password"));
 
 			if (employee != null) {
-				response.sendRedirect("/app/build/");
+				request.getSession().setAttribute("user", employee);
+				response.sendRedirect("/staff/build/");
+				return;
 			} else {
 				request.setAttribute("error", "There was an error logging in. Email or password incorrect.");
 			}

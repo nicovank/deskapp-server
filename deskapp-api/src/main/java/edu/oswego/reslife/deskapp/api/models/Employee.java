@@ -1,5 +1,6 @@
 package edu.oswego.reslife.deskapp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class Employee {
@@ -17,7 +18,7 @@ public class Employee {
 	private String lastName;
 	private Position position;
 	private String email;
-	private String hashedPassword;
+	private String password;
 	private String phoneNb;
 
 	public void setID(String id) {
@@ -67,7 +68,7 @@ public class Employee {
 	}
 
 	public void setPassword(String password) {
-		this.hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());;
+		this.password = password;
 	}
 
 	public void setPhoneNb(String phoneNb) {
@@ -78,6 +79,7 @@ public class Employee {
 		return id;
 	}
 
+	@JsonIgnore
 	public String getBuilding() {
 		return building;
 	}
@@ -98,8 +100,8 @@ public class Employee {
 		return email;
 	}
 
-	public String getHashedPassword() {
-		return hashedPassword;
+	public String getPassword() {
+		return password;
 	}
 
 	public String getPhoneNb() {
