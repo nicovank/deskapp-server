@@ -15,6 +15,11 @@
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.communication.AddMessage</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.authentication.Login</servlet-class>
+	</servlet>
+
 	<!-- Filters -->
 	<filter>
 		<filter-name>LoginFilter</filter-name>
@@ -30,6 +35,11 @@
 	<servlet-mapping>
 		<servlet-name>AddMessage</servlet-name>
 		<url-pattern>/api/communication/add</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login/</url-pattern>
 	</servlet-mapping>
 
 	<!-- Filter mappings -->

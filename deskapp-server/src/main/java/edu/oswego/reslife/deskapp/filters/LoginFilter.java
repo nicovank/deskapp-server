@@ -28,7 +28,7 @@ public class LoginFilter implements Filter {
 
 		if (session.getAttribute("user") == null) {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			response.sendRedirect("/staff/login");
+			response.sendRedirect("/login/");
 		} else {
 			response.setContentType("application/json");
 			filterChain.doFilter(request, response);

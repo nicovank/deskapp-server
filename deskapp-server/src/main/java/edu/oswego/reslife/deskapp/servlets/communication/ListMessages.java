@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class ListMessages extends HttpServlet {
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ObjectMapper mapper = new ObjectMapper();
