@@ -72,4 +72,43 @@ public class Users {
 			closeConnections(connection, statement, results);
 		}
 	}
+
+	/**
+	 * Creates a new user in the database.
+	 *
+	 * @param employee the employee to create.
+	 * @return true if the transaction was successful (i.e. there was no employee with that ID or email already).
+	 * @throws SQLException           if there was a problem connection with the database or executing the query.
+	 * @throws IOException            if there was a problem accessing the local disk.
+	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 */
+	public static boolean create(Employee employee)
+			throws SQLException, IOException, ClassNotFoundException {
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+
+		try {
+			connection = SQLConnection.getSQLConnection();
+			SQLQueryManager manager = SQLConnection.getManager();
+
+			statement = connection.prepareStatement(manager.getSQLQuery("employees.create"));
+			statement.setString(1, employee.getID());
+			statement.setString(2, employee.getBuilding());
+			statement.setString(3, employee.getFirstName());
+			statement.setString(4, employee.getLastName());
+			statement.setString(5, employee.getPosition().name());
+			statement.setString(6, employee.getEmail());
+			statement.setString(7, employee.getHashedPassword());
+			statement.setString(8, employee.getPhoneNb());
+
+			return statement.executeUpdate() == 1;
+
+		} catch (IOException | SQLException | ClassNotFoundException e) {
+			throw e;
+		} finally {
+			// Close all connections
+			closeConnections(connection, statement, null);
+		}
+	}
 }

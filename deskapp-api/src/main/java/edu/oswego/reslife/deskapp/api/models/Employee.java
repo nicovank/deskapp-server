@@ -1,5 +1,7 @@
 package edu.oswego.reslife.deskapp.api.models;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class Employee {
 
 	/**
@@ -64,8 +66,8 @@ public class Employee {
 		this.email = email;
 	}
 
-	public void setHashedPassword(String hashedPassword) {
-		this.hashedPassword = hashedPassword;
+	public void setPassword(String password) {
+		this.hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());;
 	}
 
 	public void setPhoneNb(String phoneNb) {
