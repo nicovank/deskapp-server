@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static edu.oswego.reslife.deskapp.utils.StaticUtils.*;
+
 public class Communication {
 
 	private static final int DEFAULT_MESSAGES_PER_PAGE = 10;
@@ -138,23 +140,6 @@ public class Communication {
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, null);
-		}
-	}
-
-	/**
-	 * Closes all open connections when done with SQL Query
-	 *
-	 * @param connection
-	 * @param statement
-	 * @param results
-	 */
-	private static void closeConnections(Connection connection, PreparedStatement statement, ResultSet results) {
-		try {
-			if (results != null) results.close();
-			if (statement != null) statement.close();
-			if (connection != null) connection.close();
-		} catch (SQLException ignored) {
-
 		}
 	}
 }

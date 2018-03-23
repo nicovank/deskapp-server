@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS Employees (
 	Phone_Num   VARCHAR(20),
 
 	PRIMARY KEY (ID),
+	UNIQUE (Email),
 	FOREIGN KEY (Building_ID) REFERENCES Buildings (ID)
 );
