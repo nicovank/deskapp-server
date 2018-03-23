@@ -13,21 +13,24 @@ import java.sql.SQLException;
 
 public class Create extends HttpServlet {
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		Employee user = ((Employee) request.getSession().getAttribute("user"));
+
+		if (!user.getPosition().equals(Employee.Position.RHD) || !user.getPosition().equals(Employee.Position.AHD)) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
 
 		ObjectMapper mapper = new ObjectMapper();
 		Employee employee = mapper.readValue(request.getReader(), Employee.class);
-		employee.setBuilding("MACKIN");
-		// employee.setBuilding(((Employee) request.getSession().getAttribute("user")).getBuilding());
+		employee.setBuilding(user.getBuilding());
 
 		try {
 
-			if(Users.create(employee)) {
-				response.getWriter().println("{}");
-			} else {
-				mapper.writeValue(response.getOutputStream(), new Object() {
-					String error = "it totally failed.";
-				});
+			if(!Users.create(employee)) {
+				throw new ServletException("There was an error creating that user. The email or ID number is already in the database.");
 			}
 
 		} catch (SQLException | ClassNotFoundException e) {
