@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.oswego.reslife.deskapp.api.Communication;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.Message;
+import edu.oswego.reslife.deskapp.servlets.requests.AddMessageRequest;
 import edu.oswego.reslife.deskapp.servlets.requests.ListMessagesRequest;
 
 import javax.servlet.ServletException;
@@ -16,13 +17,14 @@ import java.sql.SQLException;
 public class AddMessage extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		ObjectMapper mapper = new ObjectMapper();
+		String message = mapper.readValue(request.getReader(), AddMessageRequest.class).getMessage();
+		Employee employee = (Employee) request.getSession().getAttribute("user");
+
 		try {
 
-			Employee e = new Employee();
-			e.setID("804982890");
-			String message = "ya yeet this works perfectly sushi. I have an IQ over 9000.";
-
-			Communication.addMessage(e, message);
+			Communication.addMessage(employee, message);
 
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
