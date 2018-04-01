@@ -2,6 +2,7 @@ package edu.oswego.reslife.deskapp.servlets.communication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.oswego.reslife.deskapp.api.Communication;
+import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.Message;
 import edu.oswego.reslife.deskapp.servlets.requests.ListMessagesRequest;
 
@@ -21,7 +22,8 @@ public class ListMessages extends HttpServlet {
 
 		try {
 
-			Message[] messages = Communication.listMessages(req.getPage(), req.getBuilding());
+			Employee employee = (Employee) request.getSession().getAttribute("user");
+			Message[] messages = Communication.listMessages(req.getPage(), employee.getBuilding());
 			mapper.writeValue(response.getOutputStream(), messages);
 
 		} catch (SQLException | ClassNotFoundException e) {
