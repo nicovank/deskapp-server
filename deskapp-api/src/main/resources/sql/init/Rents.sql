@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS Rents (
 	Time_Out     DATETIME           NOT NULL,
 	Employee_Out VARCHAR(10)        NOT NULL, -- Employee that logged the item out.
 	Time_In      DATETIME,
-	Employee_In  VARCHAR(10)        NOT NULL,
-	Condition_In VARCHAR(255)       NOT NULL,
+	Employee_In  VARCHAR(10),
+	Condition_In VARCHAR(255),
 
 	PRIMARY KEY (ID),
 	FOREIGN KEY (Equipment_ID) REFERENCES Equipments (ID),

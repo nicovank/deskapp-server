@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Rents_Access (
 	Time_Out      DATETIME           NOT NULL,
 	Employee_Out  VARCHAR(10)        NOT NULL,
 	Time_In       DATETIME,
-	Employee_In   VARCHAR(10)        NOT NULL,
+	Employee_In   VARCHAR(10),
 	AccompaniedBy VARCHAR(10),                 -- ID of the RA if accompanied, else NULL.
 
 	PRIMARY KEY (ID),
