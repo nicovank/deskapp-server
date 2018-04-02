@@ -16,6 +16,16 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>CreateEmployee</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.Create</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ListRentedOutEquipment</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.equipment.ListRentedOutEquipment</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>Login</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.authentication.Login</servlet-class>
 	</servlet>
@@ -23,11 +33,6 @@
 	<servlet>
 		<servlet-name>Logout</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.authentication.Logout</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>CreateEmployee</servlet-name>
-		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.Create</servlet-class>
 	</servlet>
 
 	<!-- Filters -->
@@ -50,6 +55,11 @@
 	<servlet-mapping>
 		<servlet-name>CreateEmployee</servlet-name>
 		<url-pattern>/api/employees/create</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ListRentedOutEquipment</servlet-name>
+		<url-pattern>/api/equipment/rented</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>

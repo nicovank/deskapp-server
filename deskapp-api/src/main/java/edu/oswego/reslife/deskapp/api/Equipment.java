@@ -1,6 +1,5 @@
 package edu.oswego.reslife.deskapp.api;
 
-import edu.oswego.reslife.deskapp.api.models.Message;
 import edu.oswego.reslife.deskapp.api.models.RentedEquipmentRecord;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.api.sql.SQLQueryManager;
