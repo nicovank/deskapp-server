@@ -16,4 +16,4 @@ FROM Rents
 	JOIN Equipments ON Rents.Equipment_ID = Equipments.ID
 
 WHERE Time_In IS NULL
-			AND Equipments.Building_ID = ?
+			AND Equipments.Building_ID = ?;
