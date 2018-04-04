@@ -1,5 +1,6 @@
 package edu.oswego.reslife.deskapp.api;
 
+import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.RentedEquipmentRecord;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.api.sql.SQLQueryManager;
@@ -15,6 +16,15 @@ import static edu.oswego.reslife.deskapp.utils.StaticUtils.closeConnections;
 
 public class Equipment {
 
+	/**
+	 * Finds all equipment that are currently rented out for a given building.
+	 *
+	 * @param buildingID the building to search rented out equipment for.
+	 * @return an array of records of rented out equipment.
+	 * @throws SQLException           if there was a problem connection with the database or executing the query.
+	 * @throws IOException            if there was a problem accessing the local disk.
+	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 */
 	public static RentedEquipmentRecord[] listRentedOut(String buildingID) throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -67,5 +77,14 @@ public class Equipment {
 			// Close all connections
 			closeConnections(connection, statement, results);
 		}
+	}
+
+	public static void log(String residentID, String equipmentID, Employee employee) {
+		log(residentID, equipmentID, employee.getID());
+	}
+
+	public static void log(String residentID, String equipmentID, String employeeID) {
+		// check if the item is currently logged out
+
 	}
 }
