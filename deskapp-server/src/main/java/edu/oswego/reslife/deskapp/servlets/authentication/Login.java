@@ -3,6 +3,7 @@ package edu.oswego.reslife.deskapp.servlets.authentication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.oswego.reslife.deskapp.api.Users;
 import edu.oswego.reslife.deskapp.api.models.Employee;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -37,7 +38,7 @@ public class Login extends HttpServlet {
 			} else {
 				request.setAttribute("error", "There was an error logging in. Email or password incorrect.");
 			}
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (TransactionException e) {
 			request.setAttribute("error", "There was an error with the server. If the error persists, please contact your supervisor.");
 		}
 

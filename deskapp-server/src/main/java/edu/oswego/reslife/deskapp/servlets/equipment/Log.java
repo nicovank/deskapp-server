@@ -5,6 +5,7 @@ import edu.oswego.reslife.deskapp.api.Equipment;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.Status;
 import edu.oswego.reslife.deskapp.servlets.requests.LogRequest;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,10 +25,8 @@ public class Log extends HttpServlet {
 
 		try {
 			Status status = Equipment.log(req.getResidentID(), req.getEquipmentID(), employee.getID());
-			System.out.println(status);
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new ServletException("There was an error connecting to the database.", e);
+		} catch (TransactionException e) {
+			e.writeMessageAsJson(response.getOutputStream());
 		}
 	}
 }

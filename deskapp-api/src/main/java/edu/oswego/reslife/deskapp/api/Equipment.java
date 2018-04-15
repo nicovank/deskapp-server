@@ -1,10 +1,12 @@
 package edu.oswego.reslife.deskapp.api;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.RentedEquipmentRecord;
 import edu.oswego.reslife.deskapp.api.models.Status;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.api.sql.SQLQueryManager;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,11 +24,9 @@ public class Equipment {
 	 *
 	 * @param buildingID the building to search rented out equipment for.
 	 * @return an array of records of rented out equipment.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
-	public static RentedEquipmentRecord[] listRentedOut(String buildingID) throws SQLException, IOException, ClassNotFoundException {
+	public static RentedEquipmentRecord[] listRentedOut(String buildingID) throws TransactionException {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet results = null;
@@ -73,7 +73,7 @@ public class Equipment {
 			return ret;
 
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			throw e;
+			throw new TransactionException(e);
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, results);
@@ -81,7 +81,7 @@ public class Equipment {
 	}
 
 	public static void log(String residentID, String equipmentID, Employee employee)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		log(residentID, equipmentID, employee.getID());
 	}
@@ -93,12 +93,10 @@ public class Equipment {
 	 * @param equipmentID The equipment that is to be logged in / out.
 	 * @param employeeID  The employee responsible for the transaction.
 	 * @return the new status of the equipment.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	public static Status log(String residentID, String equipmentID, String employeeID)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		String rentID = checkIfRentedOut(equipmentID);
 
@@ -126,12 +124,10 @@ public class Equipment {
 	 * @param equipmentID The equipment that is to be logged out.
 	 * @param employeeID  The employee responsible for the transaction.
 	 * @return success if the log out was successful.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	private static boolean logOut(String residentID, String equipmentID, String employeeID)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -147,8 +143,10 @@ public class Equipment {
 
 			return statement.executeUpdate() == 1;
 
+		} catch (MySQLIntegrityConstraintViolationException e) {
+			throw new TransactionException("Equipment or Resident ID could not be found.");
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			throw e;
+			throw new TransactionException(e);
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, null);
@@ -161,12 +159,10 @@ public class Equipment {
 	 * @param rentID     the ID the the rent transaction.
 	 * @param employeeID The employee responsible for the transaction.
 	 * @return success if the log in was successful.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	private static boolean logIn(String rentID, String employeeID)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -181,8 +177,10 @@ public class Equipment {
 
 			return statement.executeUpdate() == 1;
 
+		} catch (MySQLIntegrityConstraintViolationException e) {
+			throw new TransactionException("Equipment or Resident ID could not be found.");
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			throw e;
+			throw new TransactionException(e);
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, null);
@@ -195,12 +193,10 @@ public class Equipment {
 	 *
 	 * @param equipmentID The equipment ID to check for.
 	 * @return the ID of the Rent Record, or null if the item is not currently logged out.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	private static String checkIfRentedOut(String equipmentID)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -221,7 +217,7 @@ public class Equipment {
 			return results.getString("ID");
 
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			throw e;
+			throw new TransactionException(e);
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, results);

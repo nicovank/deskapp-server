@@ -3,6 +3,7 @@ package edu.oswego.reslife.deskapp.api;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.api.sql.SQLQueryManager;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -21,12 +22,10 @@ public class Users {
 	 * @param emailOrID The email or ID to look up.
 	 * @param password  The password entered by the user.
 	 * @return the logged in employee, or null if the password or email/ID is incorrect.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	public static Employee login(String emailOrID, String password)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -66,7 +65,7 @@ public class Users {
 			return employee;
 
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			throw e;
+			throw new TransactionException(e);
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, results);
@@ -78,12 +77,10 @@ public class Users {
 	 *
 	 * @param employee the employee to create.
 	 * @return true if the transaction was successful (i.e. there was no employee with that ID or email already).
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	public static boolean create(Employee employee)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -107,7 +104,7 @@ public class Users {
 			return statement.executeUpdate() == 1;
 
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			throw e;
+			throw new TransactionException(e);
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, null);

@@ -5,6 +5,7 @@ import edu.oswego.reslife.deskapp.api.Communication;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.Message;
 import edu.oswego.reslife.deskapp.servlets.requests.ListMessagesRequest;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,9 +27,8 @@ public class ListMessages extends HttpServlet {
 			Message[] messages = Communication.listMessages(req.getPage(), employee.getBuilding());
 			mapper.writeValue(response.getOutputStream(), messages);
 
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new ServletException("There was an error connecting to the database.", e);
+		} catch (TransactionException e) {
+			e.writeMessageAsJson(response.getOutputStream());
 		}
 	}
 

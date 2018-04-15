@@ -6,6 +6,7 @@ import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.Message;
 import edu.oswego.reslife.deskapp.servlets.requests.AddMessageRequest;
 import edu.oswego.reslife.deskapp.servlets.requests.ListMessagesRequest;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,12 +24,9 @@ public class AddMessage extends HttpServlet {
 		Employee employee = (Employee) request.getSession().getAttribute("user");
 
 		try {
-
 			Communication.addMessage(employee, message);
-
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new ServletException("There was an error connecting to the database.", e);
+		} catch (TransactionException e) {
+			e.writeMessageAsJson(response.getOutputStream());
 		}
 	}
 

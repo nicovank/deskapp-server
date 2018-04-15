@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.oswego.reslife.deskapp.api.Equipment;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.RentedEquipmentRecord;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +26,8 @@ public class ListRentedOutEquipment extends HttpServlet {
 			RentedEquipmentRecord[] records = Equipment.listRentedOut(employee.getBuilding());
 			mapper.writeValue(response.getOutputStream(), records);
 
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new ServletException("There was an error connecting to the database.", e);
+		} catch (TransactionException e) {
+			e.writeMessageAsJson(response.getOutputStream());
 		}
 	}
 

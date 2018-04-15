@@ -3,6 +3,7 @@ package edu.oswego.reslife.deskapp.servlets.employees;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.oswego.reslife.deskapp.api.Users;
 import edu.oswego.reslife.deskapp.api.models.Employee;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,9 +34,8 @@ public class Create extends HttpServlet {
 				throw new ServletException("There was an error creating that user. The email or ID number is already in the database.");
 			}
 
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new ServletException("There was an error connecting to the database.", e);
+		} catch (TransactionException e) {
+			e.writeMessageAsJson(response.getOutputStream());
 		}
 	}
 

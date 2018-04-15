@@ -4,6 +4,7 @@ import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.api.sql.SQLQueryManager;
 import edu.oswego.reslife.deskapp.api.models.Message;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -26,12 +27,10 @@ public class Communication {
 	 * @param page       The page number to load.
 	 * @param buildingID The ID of the building to load messages from.
 	 * @return An array of the latest messages for the given page and building.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	public static Message[] listMessages(int page, String buildingID)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		return listMessages(page, buildingID, DEFAULT_MESSAGES_PER_PAGE);
 	}
@@ -45,12 +44,10 @@ public class Communication {
 	 * @param buildingID      The ID of the building to load messages from.
 	 * @param messagesPerPage the number of messages per page in the application
 	 * @return An array of the latest messages for the given page and building.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	public static Message[] listMessages(int page, String buildingID, int messagesPerPage)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -86,7 +83,7 @@ public class Communication {
 			return ret;
 
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			throw e;
+			throw new TransactionException(e);
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, results);
@@ -99,12 +96,10 @@ public class Communication {
 	 * @param employee the employee that posted the message.
 	 * @param message  the message to save.
 	 * @return a boolean indicating the success of the operation.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	public static boolean addMessage(Employee employee, String message)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		return addMessage(employee.getID(), message);
 	}
@@ -115,12 +110,10 @@ public class Communication {
 	 * @param employee the employee that posted the message.
 	 * @param message  the message to save.
 	 * @return a boolean indicating the success of the operation.
-	 * @throws SQLException           if there was a problem connection with the database or executing the query.
-	 * @throws IOException            if there was a problem accessing the local disk.
-	 * @throws ClassNotFoundException if there was a problem loading the JBDC driver.
+	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
 	public static boolean addMessage(String employee, String message)
-			throws SQLException, IOException, ClassNotFoundException {
+			throws TransactionException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -136,7 +129,7 @@ public class Communication {
 			return statement.executeUpdate() == 1;
 
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			throw e;
+			throw new TransactionException(e);
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, null);
