@@ -1,7 +1,7 @@
 package edu.oswego.reslife.deskapp.servlets.keys;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.oswego.reslife.deskapp.api.Equipment;
+import edu.oswego.reslife.deskapp.api.Keys;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.Status;
 import edu.oswego.reslife.deskapp.servlets.requests.AccessLogRequest;
@@ -23,8 +23,9 @@ public class Log extends HttpServlet {
 		Employee employee = (Employee) request.getSession().getAttribute("user");
 
 		try {
-			Status status = Equipment.log(req.getResidentID(), req.getAccessID(), employee.getID());
+			Status status = Keys.log(req.getResidentID(), req.getAccessID(), employee.getID());
 		} catch (TransactionException e) {
+			e.writeMessageAsJson(System.out);
 			e.writeMessageAsJson(response.getOutputStream());
 		}
 	}
