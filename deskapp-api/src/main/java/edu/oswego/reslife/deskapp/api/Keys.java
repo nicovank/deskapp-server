@@ -2,7 +2,7 @@ package edu.oswego.reslife.deskapp.api;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import edu.oswego.reslife.deskapp.api.models.Employee;
-import edu.oswego.reslife.deskapp.api.models.RentedEquipmentRecord;
+import edu.oswego.reslife.deskapp.api.models.RentedAccessRecord;
 import edu.oswego.reslife.deskapp.api.models.Status;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.api.sql.SQLQueryManager;
@@ -17,16 +17,16 @@ import java.util.ArrayList;
 
 import static edu.oswego.reslife.deskapp.utils.StaticUtils.closeConnections;
 
-public class Equipment {
+public class Keys {
 
 	/**
-	 * Finds all equipment that are currently rented out for a given building.
+	 * Finds all keys that are currently rented out for a given building.
 	 *
-	 * @param buildingID the building to search rented out equipment for.
-	 * @return an array of records of rented out equipment.
+	 * @param buildingID the building to search rented out keys for.
+	 * @return an array of records of rented out keys.
 	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
-	public static RentedEquipmentRecord[] listRentedOut(String buildingID) throws TransactionException {
+	public static RentedAccessRecord[] listRentedOut(String buildingID) throws TransactionException {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet results = null;
@@ -36,30 +36,30 @@ public class Equipment {
 			connection = SQLConnection.getSQLConnection();
 			SQLQueryManager manager = SQLConnection.getManager();
 
-			statement = connection.prepareStatement(manager.getSQLQuery("equipment.rentedOut"));
+			statement = connection.prepareStatement(manager.getSQLQuery("keys.rentedOut"));
 			statement.setString(1, buildingID);
 			results = statement.executeQuery();
 
-			ArrayList<RentedEquipmentRecord> records = new ArrayList<>();
+			ArrayList<RentedAccessRecord> records = new ArrayList<>();
 
 			while (results.next()) {
-				RentedEquipmentRecord record = new RentedEquipmentRecord();
+				RentedAccessRecord record = new RentedAccessRecord();
 
 				record.rentID = results.getString("Rent_ID");
 				record.timeOut = results.getTimestamp("Time_Out");
 
-				RentedEquipmentRecord.Equipment equipment = new RentedEquipmentRecord.Equipment();
-				equipment.id = results.getString("Equipment_ID");
-				equipment.name = results.getString("Equipment_Name");
-				record.equipment = equipment;
+				RentedAccessRecord.Access access = new RentedAccessRecord.Access();
+				access.id = results.getString("Access_ID");
+				access.type = results.getString("Access_Type");
+				record.access = access;
 
-				RentedEquipmentRecord.Resident resident = new RentedEquipmentRecord.Resident();
+				RentedAccessRecord.Resident resident = new RentedAccessRecord.Resident();
 				resident.id = results.getString("Resident_ID");
 				resident.firstName = results.getString("Resident_First_Name");
 				resident.lastName = results.getString("Resident_Last_Name");
 				record.resident = resident;
 
-				RentedEquipmentRecord.Employee employee = new RentedEquipmentRecord.Employee();
+				RentedAccessRecord.Employee employee = new RentedAccessRecord.Employee();
 				employee.id = results.getString("Employee_ID");
 				employee.firstName = results.getString("Employee_First_Name");
 				employee.lastName = results.getString("Employee_Last_Name");
@@ -68,7 +68,7 @@ public class Equipment {
 				records.add(record);
 			}
 
-			RentedEquipmentRecord[] ret = new RentedEquipmentRecord[records.size()];
+			RentedAccessRecord[] ret = new RentedAccessRecord[records.size()];
 			records.toArray(ret);
 			return ret;
 
@@ -80,47 +80,47 @@ public class Equipment {
 		}
 	}
 
-	public static void log(String residentID, String equipmentID, Employee employee)
+	public static void log(String residentID, String accessID, Employee employee)
 			throws TransactionException {
 
-		log(residentID, equipmentID, employee.getID());
+		log(residentID, accessID, employee.getID());
 	}
 
 	/**
-	 * Logs in / out a given equipment.
+	 * Logs in / out a given key.
 	 *
-	 * @param residentID  The resident that logged in / out the item. Can be null if logging some equipment back in.
-	 * @param equipmentID The equipment that is to be logged in / out.
+	 * @param residentID  The resident that logged in / out the key. Can be null if logging some key back in.
+	 * @param accessID The key that is to be logged in / out.
 	 * @param employeeID  The employee responsible for the transaction.
-	 * @return the new status of the equipment.
+	 * @return the new status of the key.
 	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
-	public static Status log(String residentID, String equipmentID, String employeeID)
+	public static Status log(String residentID, String accessID, String employeeID)
 			throws TransactionException {
 
-		String rentID = checkIfRentedOut(equipmentID);
+		String rentID = checkIfRentedOut(accessID);
 
 		if (rentID == null) {
-			// The equipment is not currently logged out.
-			logOut(residentID, equipmentID, employeeID);
+			// The key is not currently logged out.
+			logOut(residentID, accessID, employeeID);
 			return Status.LOGGED_OUT;
 		}
 
-		// We need to log the equipment back in.
+		// We need to log the key back in.
 		logIn(rentID, employeeID);
 		return Status.LOGGED_IN;
 	}
 
 	/**
-	 * Logs a given equipment out to a given resident.
+	 * Logs a given key out to a given resident.
 	 *
-	 * @param residentID  The resident that logged out the item.
-	 * @param equipmentID The equipment that is to be logged out.
+	 * @param residentID  The resident that logged out the key.
+	 * @param accessID The key that is to be logged out.
 	 * @param employeeID  The employee responsible for the transaction.
 	 * @return success if the log out was successful.
 	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
-	private static boolean logOut(String residentID, String equipmentID, String employeeID)
+	private static boolean logOut(String residentID, String accessID, String employeeID)
 			throws TransactionException {
 
 		Connection connection = null;
@@ -130,15 +130,15 @@ public class Equipment {
 			connection = SQLConnection.getSQLConnection();
 			SQLQueryManager manager = SQLConnection.getManager();
 
-			statement = connection.prepareStatement(manager.getSQLQuery("equipment.logOut"));
-			statement.setString(1, equipmentID);
+			statement = connection.prepareStatement(manager.getSQLQuery("keys.logOut"));
+			statement.setString(1, accessID);
 			statement.setString(2, residentID);
 			statement.setString(3, employeeID);
 
 			return statement.executeUpdate() == 1;
 
 		} catch (MySQLIntegrityConstraintViolationException e) {
-			throw new TransactionException("Equipment or Resident ID could not be found.");
+			throw new TransactionException("Key or Resident ID could not be found.");
 		} catch (IOException | SQLException | ClassNotFoundException e) {
 			throw new TransactionException(e);
 		} finally {
@@ -148,7 +148,7 @@ public class Equipment {
 	}
 
 	/**
-	 * Logs a given equipment back in.
+	 * Logs a given key back in.
 	 *
 	 * @param rentID     the ID the the rent transaction.
 	 * @param employeeID The employee responsible for the transaction.
@@ -165,14 +165,14 @@ public class Equipment {
 			connection = SQLConnection.getSQLConnection();
 			SQLQueryManager manager = SQLConnection.getManager();
 
-			statement = connection.prepareStatement(manager.getSQLQuery("equipment.logIn"));
+			statement = connection.prepareStatement(manager.getSQLQuery("keys.logIn"));
 			statement.setString(1, employeeID);
 			statement.setString(2, rentID);
 
 			return statement.executeUpdate() == 1;
 
 		} catch (MySQLIntegrityConstraintViolationException e) {
-			throw new TransactionException("Equipment or Resident ID could not be found.");
+			throw new TransactionException("Key or Resident ID could not be found.");
 		} catch (IOException | SQLException | ClassNotFoundException e) {
 			throw new TransactionException(e);
 		} finally {
@@ -182,14 +182,14 @@ public class Equipment {
 	}
 
 	/**
-	 * Checks if a given equipment is currently logged out.
-	 * Returns the ID of the Rent Record if the equipment, or null if the equipment is not logged out.
+	 * Checks if a given key is currently logged out.
+	 * Returns the ID of the Rent Record if the key is logged ut, or null if the key is not logged out.
 	 *
-	 * @param equipmentID The equipment ID to check for.
-	 * @return the ID of the Rent Record, or null if the item is not currently logged out.
+	 * @param accessID The key ID to check for.
+	 * @return the ID of the Rent Record, or null if the key is not currently logged out.
 	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
-	private static String checkIfRentedOut(String equipmentID)
+	private static String checkIfRentedOut(String accessID)
 			throws TransactionException {
 
 		Connection connection = null;
@@ -200,8 +200,8 @@ public class Equipment {
 			connection = SQLConnection.getSQLConnection();
 			SQLQueryManager manager = SQLConnection.getManager();
 
-			statement = connection.prepareStatement(manager.getSQLQuery("equipment.isRentedOut"));
-			statement.setString(1, equipmentID);
+			statement = connection.prepareStatement(manager.getSQLQuery("keys.isRentedOut"));
+			statement.setString(1, accessID);
 
 			results = statement.executeQuery();
 			if (!results.next()) {

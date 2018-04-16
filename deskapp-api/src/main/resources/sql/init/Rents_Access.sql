@@ -6,12 +6,10 @@ CREATE TABLE IF NOT EXISTS Rents_Access (
 	Employee_Out  VARCHAR(10)        NOT NULL,
 	Time_In       DATETIME,
 	Employee_In   VARCHAR(10),
-	AccompaniedBy VARCHAR(10),                 -- ID of the RA if accompanied, else NULL.
 
 	PRIMARY KEY (ID),
 	FOREIGN KEY (Access_ID)     REFERENCES Access    (ID),
 	FOREIGN KEY (Resident_ID)   REFERENCES Residents (ID),
 	FOREIGN KEY (Employee_Out)  REFERENCES Employees (ID),
-	FOREIGN KEY (Employee_In)   REFERENCES Employees (ID),
-	FOREIGN KEY (AccompaniedBy) REFERENCES Employees (ID)
-)
+	FOREIGN KEY (Employee_In)   REFERENCES Employees (ID)
+);

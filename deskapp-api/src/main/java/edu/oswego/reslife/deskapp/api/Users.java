@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static edu.oswego.reslife.deskapp.utils.StaticUtils.*;
 
@@ -108,6 +109,85 @@ public class Users {
 		} finally {
 			// Close all connections
 			closeConnections(connection, statement, null);
+		}
+	}
+
+	/**
+	 * Deletes a given employee from the database.
+	 *
+	 * @param employeeID The employee to delete.
+	 * @return true if the employee was successfully deleted.
+	 * @throws TransactionException if there was any problem completing the transaction.
+	 */
+	public static boolean delete(String employeeID) throws TransactionException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+
+		try {
+
+			connection = SQLConnection.getSQLConnection();
+			SQLQueryManager manager = SQLConnection.getManager();
+
+			statement = connection.prepareStatement(manager.getSQLQuery("employees.delete"));
+			statement.setString(1, employeeID);
+
+			return statement.executeUpdate() == 1;
+
+		} catch (IOException | SQLException | ClassNotFoundException e) {
+			throw new TransactionException(e);
+		} finally {
+			// Close all connections
+			closeConnections(connection, statement, null);
+		}
+	}
+
+	/**
+	 * Lists all employees for a given building.
+	 *
+	 * @param buildingID The building ID to search for.
+	 * @return a list of employees registered at the given building.
+	 * @throws TransactionException if there was any problem completing the transaction.
+	 */
+	public static Employee[] list(String buildingID) throws TransactionException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet results = null;
+
+		try {
+
+			connection = SQLConnection.getSQLConnection();
+			SQLQueryManager manager = SQLConnection.getManager();
+
+			statement = connection.prepareStatement(manager.getSQLQuery("employees.list"));
+			statement.setString(1, buildingID);
+
+			results = statement.executeQuery();
+
+			ArrayList<Employee> employees = new ArrayList<>();
+
+			while (results.next()) {
+				Employee employee = new Employee();
+
+				employee.setID(results.getString("ID"));
+				employee.setBuilding(results.getString("Building_ID"));
+				employee.setFirstName(results.getString("First_Name"));
+				employee.setLastName(results.getString("Last_Name"));
+				employee.setPosition(results.getString("Position"));
+				employee.setEmail(results.getString("Email"));
+				employee.setPhoneNb(results.getString("Phone_Num"));
+
+				employees.add(employee);
+			}
+
+			Employee[] ret = new Employee[employees.size()];
+			employees.toArray(ret);
+			return ret;
+
+		} catch (IOException | SQLException | ClassNotFoundException e) {
+			throw new TransactionException(e);
+		} finally {
+			// Close all connections
+			closeConnections(connection, statement, results);
 		}
 	}
 }

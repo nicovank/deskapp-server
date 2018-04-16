@@ -2,7 +2,7 @@ package edu.oswego.reslife.deskapp.servlets.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class LogRequest {
+public class EquipmentLogRequest {
 	private String residentID;
 	private String equipmentID;
 

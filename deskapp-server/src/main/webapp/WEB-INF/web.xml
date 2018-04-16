@@ -31,6 +31,16 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>ListRentedOutAccess</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.keys.ListRentedOutAccess</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>AccessLog</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.keys.Log</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>Login</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.authentication.Login</servlet-class>
 	</servlet>
@@ -70,6 +80,16 @@
 	<servlet-mapping>
 		<servlet-name>EquipmentLog</servlet-name>
 		<url-pattern>/api/equipment/log</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ListRentedOutAccess</servlet-name>
+		<url-pattern>/api/keys/rented</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AccessLog</servlet-name>
+		<url-pattern>/api/keys/log</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>

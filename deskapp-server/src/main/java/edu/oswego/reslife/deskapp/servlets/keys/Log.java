@@ -1,10 +1,10 @@
-package edu.oswego.reslife.deskapp.servlets.equipment;
+package edu.oswego.reslife.deskapp.servlets.keys;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.oswego.reslife.deskapp.api.Equipment;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.Status;
-import edu.oswego.reslife.deskapp.servlets.requests.EquipmentLogRequest;
+import edu.oswego.reslife.deskapp.servlets.requests.AccessLogRequest;
 import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import javax.servlet.ServletException;
@@ -19,11 +19,11 @@ public class Log extends HttpServlet {
 			throws ServletException, IOException {
 
 		ObjectMapper mapper = new ObjectMapper();
-		EquipmentLogRequest req = mapper.readValue(request.getReader(), EquipmentLogRequest.class);
+		AccessLogRequest req = mapper.readValue(request.getReader(), AccessLogRequest.class);
 		Employee employee = (Employee) request.getSession().getAttribute("user");
 
 		try {
-			Status status = Equipment.log(req.getResidentID(), req.getEquipmentID(), employee.getID());
+			Status status = Equipment.log(req.getResidentID(), req.getAccessID(), employee.getID());
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());
 		}
