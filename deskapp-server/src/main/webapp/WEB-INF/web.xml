@@ -41,6 +41,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>EmployeeList</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.List</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>Login</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.authentication.Login</servlet-class>
 	</servlet>
@@ -90,6 +95,11 @@
 	<servlet-mapping>
 		<servlet-name>AccessLog</servlet-name>
 		<url-pattern>/api/keys/log</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>EmployeeList</servlet-name>
+		<url-pattern>/api/employees/list</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>

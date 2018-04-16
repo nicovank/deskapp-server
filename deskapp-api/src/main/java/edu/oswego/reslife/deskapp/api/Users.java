@@ -169,7 +169,6 @@ public class Users {
 				Employee employee = new Employee();
 
 				employee.setID(results.getString("ID"));
-				employee.setBuilding(results.getString("Building_ID"));
 				employee.setFirstName(results.getString("First_Name"));
 				employee.setLastName(results.getString("Last_Name"));
 				employee.setPosition(results.getString("Position"));
