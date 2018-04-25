@@ -79,7 +79,6 @@ public class Employee {
 		return id;
 	}
 
-	@JsonIgnore
 	public String getBuilding() {
 		return building;
 	}

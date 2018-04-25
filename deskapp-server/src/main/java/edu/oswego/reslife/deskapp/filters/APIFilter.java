@@ -3,10 +3,9 @@ package edu.oswego.reslife.deskapp.filters;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LoginFilter implements Filter {
+public class APIFilter implements Filter {
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -22,14 +21,13 @@ public class LoginFilter implements Filter {
 	}
 
 	private void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+		String headerToken = request.getHeader("Token");
+		String sessionToken = (String) request.getSession().getAttribute("token");
 
-		// We check if the user is logged in.
-
-		HttpSession session = request.getSession(true);
-
-		if (session.getAttribute("user") == null) {
+		if (headerToken == null || !headerToken.equals(sessionToken)) {
 			response.sendRedirect("/login/");
 		} else {
+			response.setContentType("application/json");
 			filterChain.doFilter(request, response);
 		}
 	}
