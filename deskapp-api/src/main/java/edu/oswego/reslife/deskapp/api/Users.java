@@ -156,7 +156,7 @@ public class Users {
      * @throws TransactionException if there was any problem completing the
      * transaction.
      */
-    public static boolean update(String id, Employee employee)
+    public static boolean update(Employee employee)
             throws TransactionException {
 
         Connection connection = null;
@@ -167,13 +167,12 @@ public class Users {
             SQLQueryManager manager = SQLConnection.getManager();
 
             statement = connection.prepareStatement(manager.getSQLQuery("employees.update"));
-            statement.setString(1, employee.getID());
-            statement.setString(2, employee.getFirstName());
-            statement.setString(3, employee.getLastName());
-            statement.setString(4, employee.getPosition().name());
-            statement.setString(5, employee.getEmail());
-            statement.setString(6, employee.getPhoneNb());
-            statement.setString(7, id);
+            statement.setString(1, employee.getFirstName());
+            statement.setString(2, employee.getLastName());
+            statement.setString(3, employee.getPosition().name());
+            statement.setString(4, employee.getEmail());
+            statement.setString(5, employee.getPhoneNb());
+            statement.setString(6, employee.getID());
 
             return statement.executeUpdate() == 1;
 
