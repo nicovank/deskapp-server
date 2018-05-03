@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS Rents (
 	Employee_Out VARCHAR(10)        NOT NULL, -- Employee that logged the item out.
 	Time_In      DATETIME,
 	Employee_In  VARCHAR(10),
-	Condition_In VARCHAR(255),
 
 	PRIMARY KEY (ID),
 	FOREIGN KEY (Equipment_ID) REFERENCES Equipments (ID),

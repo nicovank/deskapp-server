@@ -16,8 +16,8 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>CreateEmployee</servlet-name>
-		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.Create</servlet-class>
+		<servlet-name>SaveEmployee</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.Save</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -83,8 +83,8 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>CreateEmployee</servlet-name>
-		<url-pattern>/api/employees/create</url-pattern>
+		<servlet-name>SaveEmployee</servlet-name>
+		<url-pattern>/api/employees/save</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
