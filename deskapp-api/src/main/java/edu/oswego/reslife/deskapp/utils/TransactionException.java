@@ -9,7 +9,7 @@ import java.io.OutputStream;
 public class TransactionException extends Exception {
 
 	private static final class JSONMessage {
-		@JsonProperty("message")
+		@JsonProperty("error")
 		private String message;
 
 		public JSONMessage(String message) {
