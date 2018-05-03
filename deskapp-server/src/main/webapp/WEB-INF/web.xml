@@ -46,6 +46,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>DeleteEmployee</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.Delete</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>Login</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.authentication.Login</servlet-class>
 	</servlet>
@@ -85,6 +90,11 @@
 	<servlet-mapping>
 		<servlet-name>SaveEmployee</servlet-name>
 		<url-pattern>/api/employees/save</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>DeleteEmployee</servlet-name>
+		<url-pattern>/api/employees/delete</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
