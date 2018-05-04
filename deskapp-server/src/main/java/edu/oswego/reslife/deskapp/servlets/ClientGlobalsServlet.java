@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ClientGlobalsServlet extends HttpServlet {
 
 	private static final class GlobalsData {
-		@JsonProperty("employee")
+		@JsonProperty("employee_out")
 		Employee employee;
 
 		@JsonProperty("token")

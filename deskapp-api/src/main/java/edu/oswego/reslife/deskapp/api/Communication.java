@@ -91,9 +91,9 @@ public class Communication {
 	}
 
 	/**
-	 * Adds a new message into the database, from the given employee.
+	 * Adds a new message into the database, from the given employee_out.
 	 *
-	 * @param employee the employee that posted the message.
+	 * @param employee the employee_out that posted the message.
 	 * @param message  the message to save.
 	 * @return a boolean indicating the success of the operation.
 	 * @throws TransactionException if there was any problem completing the transaction.
@@ -105,9 +105,9 @@ public class Communication {
 	}
 
 	/**
-	 * Adds a new message into the database, from the given employee.
+	 * Adds a new message into the database, from the given employee_out.
 	 *
-	 * @param employee the employee that posted the message.
+	 * @param employee the employee_out that posted the message.
 	 * @param message  the message to save.
 	 * @return a boolean indicating the success of the operation.
 	 * @throws TransactionException if there was any problem completing the transaction.

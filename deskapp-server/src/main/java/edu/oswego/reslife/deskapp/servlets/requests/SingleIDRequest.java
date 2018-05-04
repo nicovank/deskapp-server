@@ -2,7 +2,7 @@ package edu.oswego.reslife.deskapp.servlets.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DeleteEmployeeRequest {
+public class SingleIDRequest {
 	private String id;
 
 	@JsonProperty("id")

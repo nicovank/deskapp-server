@@ -44,14 +44,14 @@ public class RentedEquipmentRecord {
 	@JsonProperty("timeIn")
 	public Timestamp timeIn;
 
-	@JsonProperty("condition")
-	public String condition;
-
 	@JsonProperty("resident")
 	public Resident resident;
 
 	@JsonProperty("employee")
-	public Employee employee;
+	public Employee employee_out;
+
+	@JsonProperty("employee_in")
+	public Employee employee_in;
 
 	@JsonProperty("equipment")
 	public Equipment equipment;

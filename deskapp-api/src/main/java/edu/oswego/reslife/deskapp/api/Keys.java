@@ -63,7 +63,7 @@ public class Keys {
 				employee.id = results.getString("Employee_ID");
 				employee.firstName = results.getString("Employee_First_Name");
 				employee.lastName = results.getString("Employee_Last_Name");
-				record.employee = employee;
+				record.employee_out = employee;
 
 				records.add(record);
 			}
@@ -91,7 +91,7 @@ public class Keys {
 	 *
 	 * @param residentID  The resident that logged in / out the key. Can be null if logging some key back in.
 	 * @param accessID The key that is to be logged in / out.
-	 * @param employeeID  The employee responsible for the transaction.
+	 * @param employeeID  The employee_out responsible for the transaction.
 	 * @return the new status of the key.
 	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
@@ -116,7 +116,7 @@ public class Keys {
 	 *
 	 * @param residentID  The resident that logged out the key.
 	 * @param accessID The key that is to be logged out.
-	 * @param employeeID  The employee responsible for the transaction.
+	 * @param employeeID  The employee_out responsible for the transaction.
 	 * @return success if the log out was successful.
 	 * @throws TransactionException if there was any problem completing the transaction.
 	 */
@@ -151,7 +151,7 @@ public class Keys {
 	 * Logs a given key back in.
 	 *
 	 * @param rentID     the ID the the rent transaction.
-	 * @param employeeID The employee responsible for the transaction.
+	 * @param employeeID The employee_out responsible for the transaction.
 	 * @return success if the log in was successful.
 	 * @throws TransactionException if there was any problem completing the transaction.
 	 */

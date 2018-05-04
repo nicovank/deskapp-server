@@ -48,7 +48,10 @@ public class RentedAccessRecord {
 	public Resident resident;
 
 	@JsonProperty("employee")
-	public Employee employee;
+	public Employee employee_out;
+
+	@JsonProperty("employee_in")
+	public Employee employee_in;
 
 	@JsonProperty("access")
 	public Access access;

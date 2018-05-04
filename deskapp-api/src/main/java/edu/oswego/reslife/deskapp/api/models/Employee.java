@@ -6,7 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class Employee {
 
 	/**
-	 * Position of the employee. Must be coherent with the constraint on the table.
+	 * Position of the employee_out. Must be coherent with the constraint on the table.
 	 */
 	public enum Position {
 		RHD, AHD, RA, DA
@@ -38,9 +38,9 @@ public class Employee {
 	}
 
 	/**
-	 * Utility, sets the position from the string representation of the enum's value of the employee's position.
+	 * Utility, sets the position from the string representation of the enum's value of the employee_out's position.
 	 *
-	 * @param position a string representing the position of the employee.
+	 * @param position a string representing the position of the employee_out.
 	 */
 	public void setPosition(String position) {
 		switch (position) {

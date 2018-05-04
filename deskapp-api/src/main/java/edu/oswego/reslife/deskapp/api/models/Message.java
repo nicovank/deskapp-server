@@ -22,18 +22,18 @@ public class Message {
 	}
 
 	/**
-	 * Returns the first name of the employee that posted the message.
+	 * Returns the first name of the employee_out that posted the message.
 	 *
-	 * @return the first name of the employee that posted the message.
+	 * @return the first name of the employee_out that posted the message.
 	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
 	/**
-	 * Returns the last name of the employee that posted the message.
+	 * Returns the last name of the employee_out that posted the message.
 	 *
-	 * @return the last name of the employee that posted the message.
+	 * @return the last name of the employee_out that posted the message.
 	 */
 	public String getLastName() {
 		return lastName;
@@ -67,7 +67,7 @@ public class Message {
 	}
 
 	/**
-	 * Sets the first name of the employee that posted the message.
+	 * Sets the first name of the employee_out that posted the message.
 	 *
 	 * @param firstName The first name to store.
 	 */
@@ -76,7 +76,7 @@ public class Message {
 	}
 
 	/**
-	 * Sets the last name of the employee that posted the message.
+	 * Sets the last name of the employee_out that posted the message.
 	 *
 	 * @param lastName The last name to store.
 	 */
@@ -94,7 +94,7 @@ public class Message {
 	}
 
 	/**
-	 * Stores the message that was posted by the employee.
+	 * Stores the message that was posted by the employee_out.
 	 *
 	 * @param message the message to store.
 	 */
