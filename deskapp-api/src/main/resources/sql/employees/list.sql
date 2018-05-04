@@ -6,5 +6,5 @@ SELECT
 	Email,
 	Phone_Num
 
-FROM employees
-WHERE Building_ID = ?
+FROM Employees
+WHERE Building_ID = ?;
