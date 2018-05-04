@@ -25,6 +25,8 @@ public class ListRentedOutAccess extends HttpServlet {
 			RentedAccessRecord[] records = Keys.listRentedOut(employee.getBuilding());
 			mapper.writeValue(response.getOutputStream(), records);
 
+			System.out.printf("There are %d keys or fobs rented out in '%s'.%n", records.length, employee.getBuilding());
+
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());
 		}

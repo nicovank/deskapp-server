@@ -34,6 +34,8 @@ public class Login extends HttpServlet {
 
 				response.sendRedirect("/staff/build/");
 
+				System.out.printf("User '%s %s' logged in.%n", employee.getFirstName(), employee.getLastName());
+
 				return;
 			} else {
 				request.setAttribute("error", "There was an error logging in. Email or password incorrect.");

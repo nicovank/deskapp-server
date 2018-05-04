@@ -25,6 +25,7 @@ public class ListRentedOutEquipment extends HttpServlet {
 
 			RentedEquipmentRecord[] records = Equipment.listRentedOut(employee.getBuilding());
 			mapper.writeValue(response.getOutputStream(), records);
+			System.out.printf("There are %d items rented out in '%s'.%n", records.length, employee.getBuilding());
 
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());

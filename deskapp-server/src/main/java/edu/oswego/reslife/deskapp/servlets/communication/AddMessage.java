@@ -25,6 +25,7 @@ public class AddMessage extends HttpServlet {
 
 		try {
 			Communication.addMessage(employee, message);
+			System.out.printf("'%s %s' from '%s' says:%n%s%n", employee.getFirstName(), employee.getLastName(), employee.getBuilding(), message);
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());
 		}

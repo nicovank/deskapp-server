@@ -24,6 +24,7 @@ public class Log extends HttpServlet {
 
 		try {
 			Status status = Equipment.log(req.getResidentID(), req.getEquipmentID(), employee.getID());
+			System.out.printf("Equipment # '%s' is now marked as %s.%n", req.getEquipmentID(), status);
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());
 		}

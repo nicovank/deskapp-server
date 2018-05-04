@@ -27,6 +27,8 @@ public class ListMessages extends HttpServlet {
 			Message[] messages = Communication.listMessages(req.getPage(), employee.getBuilding());
 			mapper.writeValue(response.getOutputStream(), messages);
 
+			System.out.printf("There are %d messages in '%s'%n", messages.length, employee.getBuilding());
+
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());
 		}

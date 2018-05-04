@@ -32,6 +32,7 @@ public class Delete extends HttpServlet {
 			}
 
 			response.getWriter().println("{}");
+			System.out.printf("Employee '%s %s' was successfully disabled from the system.%n", employee.getFirstName(), employee.getLastName());
 
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());

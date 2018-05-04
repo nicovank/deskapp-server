@@ -23,6 +23,7 @@ public class History extends HttpServlet {
 
 			RentedEquipmentRecord[] records = Equipment.history(id);
 			mapper.writeValue(response.getOutputStream(), records);
+			System.out.printf("There are %d records for the '%s'.%n", records.length, records[0].equipment.name);
 
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());

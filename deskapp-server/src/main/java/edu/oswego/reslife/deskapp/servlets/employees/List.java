@@ -27,6 +27,7 @@ public class List extends HttpServlet {
 
 			Employee[] records = Users.list(employee.getBuilding());
 			mapper.writeValue(response.getOutputStream(), records);
+			System.out.printf("There are %d employees in '%s'.%n", records.length, employee.getBuilding());
 
 		} catch (TransactionException e) {
 			e.writeMessageAsJson(response.getOutputStream());
