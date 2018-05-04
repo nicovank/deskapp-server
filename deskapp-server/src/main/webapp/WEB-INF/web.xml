@@ -34,6 +34,11 @@
 		<servlet-name>ListRentedOutAccess</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.keys.ListRentedOutAccess</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>EquipmentHistory</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.equipment.History</servlet-class>
+	</servlet>
 
 	<servlet>
 		<servlet-name>AccessLog</servlet-name>
@@ -100,6 +105,11 @@
 	<servlet-mapping>
 		<servlet-name>ListRentedOutEquipment</servlet-name>
 		<url-pattern>/api/equipment/rented</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>EquipmentHistory</servlet-name>
+		<url-pattern>/api/equipment/history</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
