@@ -1,2 +1,3 @@
-DELETE FROM Employees
+UPDATE Employees
+SET Active = 'no'
 WHERE ID = ?;

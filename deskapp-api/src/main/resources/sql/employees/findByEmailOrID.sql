@@ -1,3 +1,4 @@
 SELECT *
 FROM Employees
-WHERE Email = ? OR ID = ?;
+WHERE (Email = ? OR ID = ?)
+AND Active = 'yes';
