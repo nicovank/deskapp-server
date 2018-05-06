@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import static edu.oswego.reslife.deskapp.utils.StaticUtils.*;
 
-public class Users {
+public class Employees {
 
     /**
      * Checks if a user's ID exists in the database.

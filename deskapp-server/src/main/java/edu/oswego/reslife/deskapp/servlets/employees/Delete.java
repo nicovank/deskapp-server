@@ -1,7 +1,7 @@
 package edu.oswego.reslife.deskapp.servlets.employees;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.oswego.reslife.deskapp.api.Users;
+import edu.oswego.reslife.deskapp.api.Employees;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.servlets.requests.SingleIDRequest;
 import edu.oswego.reslife.deskapp.utils.TransactionException;
@@ -27,7 +27,7 @@ public class Delete extends HttpServlet {
 				throw new TransactionException("You do not have the right to perform this operation.");
 			}
 
-			if (!Users.delete(id)) {
+			if (!Employees.delete(id)) {
 				throw new TransactionException("There was an error deleting the user.");
 			}
 

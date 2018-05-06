@@ -1,7 +1,7 @@
 package edu.oswego.reslife.deskapp.servlets.employees;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.oswego.reslife.deskapp.api.Users;
+import edu.oswego.reslife.deskapp.api.Employees;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.utils.TransactionException;
 
@@ -25,7 +25,7 @@ public class List extends HttpServlet {
 				throw new TransactionException("You do not have the right to perform this operation.");
 			}
 
-			Employee[] records = Users.list(employee.getBuilding());
+			Employee[] records = Employees.list(employee.getBuilding());
 			mapper.writeValue(response.getOutputStream(), records);
 			System.out.printf("There are %d employees in '%s'.%n", records.length, employee.getBuilding());
 

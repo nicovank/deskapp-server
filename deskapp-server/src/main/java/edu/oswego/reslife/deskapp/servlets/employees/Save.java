@@ -1,7 +1,7 @@
 package edu.oswego.reslife.deskapp.servlets.employees;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.oswego.reslife.deskapp.api.Users;
+import edu.oswego.reslife.deskapp.api.Employees;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.utils.TransactionException;
 
@@ -29,8 +29,8 @@ public class Save extends HttpServlet {
 				throw new TransactionException("You do not have the right to perform this operation.");
 			}
 
-			if (data.getID() != null && Users.exists(data.getID())) {
-				if (!Users.update(data)) {
+			if (data.getID() != null && Employees.exists(data.getID())) {
+				if (!Employees.update(data)) {
 					throw new TransactionException("There was an error updating that user.");
 				}
 				System.out.printf("Employee '%s %s''s information was successfully updated.%n", data.getFirstName(), data.getLastName());
@@ -38,7 +38,7 @@ public class Save extends HttpServlet {
 				String password = randomPassword(8);
 				data.setPassword(password);
 				data.setBuilding(user.getBuilding());
-				if (!Users.create(data)) {
+				if (!Employees.create(data)) {
 					throw new TransactionException("There was an error creating that user.");
 				}
 

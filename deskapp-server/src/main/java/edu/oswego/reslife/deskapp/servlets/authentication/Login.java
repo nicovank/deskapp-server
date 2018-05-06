@@ -1,7 +1,7 @@
 package edu.oswego.reslife.deskapp.servlets.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.oswego.reslife.deskapp.api.Users;
+import edu.oswego.reslife.deskapp.api.Employees;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.utils.TransactionException;
 
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.UUID;
 
 public class Login extends HttpServlet {
@@ -21,7 +20,7 @@ public class Login extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 
 		try {
-			Employee employee = Users.login(request.getParameter("user"), request.getParameter("password"));
+			Employee employee = Employees.login(request.getParameter("user"), request.getParameter("password"));
 
 			if (employee != null) {
 				String token = UUID.randomUUID().toString();
