@@ -1,0 +1,3 @@
+SELECT ID
+FROM Residents
+WHERE ID = ?;

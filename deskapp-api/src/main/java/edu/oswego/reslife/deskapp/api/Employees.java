@@ -53,7 +53,7 @@ public class Employees {
      *
      * @param emailOrID The email or ID to look up.
      * @param password The password entered by the user.
-     * @return the logged in employee_out, or null if the password or email/ID is
+     * @return the logged in employee, or null if the password or email/ID is
      * incorrect.
      * @throws TransactionException if there was any problem completing the
      * transaction.
@@ -110,9 +110,9 @@ public class Employees {
     /**
      * Creates a new user in the database.
      *
-     * @param employee the employee_out to create.
+     * @param employee the employe to create.
      * @return true if the transaction was successful (i.e. there was no
-     * employee_out with that ID or email already).
+     * employee with that ID or email already).
      * @throws TransactionException if there was any problem completing the
      * transaction.
      */
@@ -185,10 +185,10 @@ public class Employees {
     }
 
     /**
-     * Deletes a given employee_out from the database.
+     * Deletes a given employee from the database.
      *
-     * @param employeeID The employee_out to delete.
-     * @return true if the employee_out was successfully deleted.
+     * @param employeeID The employee to delete.
+     * @return true if the employee was successfully deleted.
      * @throws TransactionException if there was any problem completing the
      * transaction.
      */
