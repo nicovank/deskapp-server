@@ -148,9 +148,8 @@ public class Users {
     }
 
     /**
-     * Updates the existing user that has the given id.
+     * Updates an existing user.
      *
-     * @param id The id of the existing user.
      * @param employee The information to override the current record with.
      * @return true if the transaction was successful, else false.
      * @throws TransactionException if there was any problem completing the
