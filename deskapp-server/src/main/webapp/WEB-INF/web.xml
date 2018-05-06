@@ -16,11 +16,6 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>SaveEmployee</servlet-name>
-		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.Save</servlet-class>
-	</servlet>
-
-	<servlet>
 		<servlet-name>ListRentedOutEquipment</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.equipment.ListRentedOutEquipment</servlet-class>
 	</servlet>
@@ -54,6 +49,27 @@
 		<servlet-name>DeleteEmployee</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.Delete</servlet-class>
 	</servlet>
+
+	<servlet>
+		<servlet-name>SaveEmployee</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.employees.Save</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ResidentList</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.residents.List</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>DeleteResident</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.residents.Delete</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SaveResident</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.residents.Save</servlet-class>
+	</servlet>
+
 
 	<servlet>
 		<servlet-name>Login</servlet-name>
@@ -103,6 +119,26 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
+		<servlet-name>EmployeeList</servlet-name>
+		<url-pattern>/api/employees/list</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SaveResident</servlet-name>
+		<url-pattern>/api/residents/save</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>DeleteResident</servlet-name>
+		<url-pattern>/api/residents/delete</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ResidentList</servlet-name>
+		<url-pattern>/api/residents/list</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>ListRentedOutEquipment</servlet-name>
 		<url-pattern>/api/equipment/rented</url-pattern>
 	</servlet-mapping>
@@ -125,11 +161,6 @@
 	<servlet-mapping>
 		<servlet-name>AccessLog</servlet-name>
 		<url-pattern>/api/keys/log</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>EmployeeList</servlet-name>
-		<url-pattern>/api/employees/list</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
