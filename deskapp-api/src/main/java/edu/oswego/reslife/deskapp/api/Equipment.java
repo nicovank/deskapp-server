@@ -1,6 +1,5 @@
 package edu.oswego.reslife.deskapp.api;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import edu.oswego.reslife.deskapp.api.models.Employee;
 import edu.oswego.reslife.deskapp.api.models.RentedEquipmentRecord;
 import edu.oswego.reslife.deskapp.api.models.Status;
@@ -198,8 +197,6 @@ public class Equipment {
 
 			return statement.executeUpdate() == 1;
 
-		} catch (MySQLIntegrityConstraintViolationException e) {
-			throw new TransactionException("Equipment or Resident ID could not be found.");
 		} catch (IOException | SQLException | ClassNotFoundException e) {
 			throw new TransactionException(e);
 		} finally {
@@ -232,8 +229,6 @@ public class Equipment {
 
 			return statement.executeUpdate() == 1;
 
-		} catch (MySQLIntegrityConstraintViolationException e) {
-			throw new TransactionException("Equipment or Resident ID could not be found.");
 		} catch (IOException | SQLException | ClassNotFoundException e) {
 			throw new TransactionException(e);
 		} finally {

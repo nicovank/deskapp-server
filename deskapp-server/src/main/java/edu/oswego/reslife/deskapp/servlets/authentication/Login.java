@@ -41,6 +41,7 @@ public class Login extends HttpServlet {
 				request.setAttribute("error", "There was an error logging in. Email or password incorrect.");
 			}
 		} catch (TransactionException e) {
+			e.printStackTrace();
 			request.setAttribute("error", "There was an error with the server. If the error persists, please contact your supervisor.");
 		}
 

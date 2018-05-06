@@ -99,6 +99,7 @@ public class Users {
             return employee;
 
         } catch (IOException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
             throw new TransactionException(e);
         } finally {
             // Close all connections
