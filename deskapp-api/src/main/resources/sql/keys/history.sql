@@ -1,5 +1,5 @@
 SELECT
-	Rents.ID             AS Rent_ID,
+	Rents_Access.ID             AS Rent_ID,
 	Time_Out, Time_In,
 	Access.ID            AS Access_ID,
 	Access.Type          AS Access_Type,
@@ -13,11 +13,11 @@ SELECT
 	EI.First_Name        AS Employee_In_First_Name,
 	EI.Last_Name         AS Employee_In_Last_Name
 
-FROM Rents
-	JOIN Employees AS EO ON Rents.Employee_Out = EO.ID
-	JOIN Employees AS EI ON Rents.Employee_In = EI.ID
-	JOIN Residents ON Rents.Resident_ID = Residents.ID
-	JOIN Access ON Rents.Equipment_ID = Access.ID
+FROM Rents_Access
+	JOIN Employees AS EO ON Rents_Access.Employee_Out = EO.ID
+	JOIN Employees AS EI ON Rents_Access.Employee_In = EI.ID
+	JOIN Residents ON Rents_Access.Resident_ID = Residents.ID
+	JOIN Access ON Rents_Access.Access_ID = Access.ID
 
 WHERE Access.ID = ?
 

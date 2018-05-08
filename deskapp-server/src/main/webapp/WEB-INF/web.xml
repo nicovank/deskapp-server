@@ -155,7 +155,7 @@
 
 	<servlet-mapping>
 		<servlet-name>AccessHistory</servlet-name>
-		<url-pattern>/api/access/history</url-pattern>
+		<url-pattern>/api/keys/history</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
