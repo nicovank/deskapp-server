@@ -1,6 +1,7 @@
 package edu.oswego.reslife.deskapp.api;
 
 import edu.oswego.reslife.deskapp.api.models.Employee;
+import edu.oswego.reslife.deskapp.api.models.RentedAccessRecord;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
 import edu.oswego.reslife.deskapp.api.sql.SQLQueryManager;
 import edu.oswego.reslife.deskapp.utils.TransactionException;

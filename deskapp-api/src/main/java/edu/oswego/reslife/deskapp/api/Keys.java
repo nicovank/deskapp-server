@@ -79,6 +79,74 @@ public class Keys {
 		}
 	}
 
+	/**
+	 * Returns a history of transactions for a given key.
+	 *
+	 * @param accessID The equipment to look up.
+	 * @return An array of RentedAccessRecords.
+	 * @throws TransactionException if there was any problem completing the transaction.
+	 */
+	public static RentedAccessRecord[] history(String accessID) throws TransactionException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet results = null;
+
+		try {
+
+			connection = SQLConnection.getSQLConnection();
+			SQLQueryManager manager = SQLConnection.getManager();
+
+			statement = connection.prepareStatement(manager.getSQLQuery("keys.history"));
+			statement.setString(1, accessID);
+			results = statement.executeQuery();
+
+			ArrayList<RentedAccessRecord> records = new ArrayList<>();
+
+			while (results.next()) {
+				RentedAccessRecord record = new RentedAccessRecord();
+
+				record.rentID = results.getString("Rent_ID");
+				record.timeOut = results.getTimestamp("Time_Out");
+				record.timeIn = results.getTimestamp("Time_In");
+
+				RentedAccessRecord.Access equipment = new RentedAccessRecord.Access();
+				equipment.id = results.getString("Access_ID");
+				equipment.type = results.getString("Access_type");
+				record.access = equipment;
+
+				RentedAccessRecord.Resident resident = new RentedAccessRecord.Resident();
+				resident.id = results.getString("Resident_ID");
+				resident.firstName = results.getString("Resident_First_Name");
+				resident.lastName = results.getString("Resident_Last_Name");
+				record.resident = resident;
+
+				RentedAccessRecord.Employee employee_out = new RentedAccessRecord.Employee();
+				employee_out.id = results.getString("Employee_Out_ID");
+				employee_out.firstName = results.getString("Employee_Out_First_Name");
+				employee_out.lastName = results.getString("Employee_Out_Last_Name");
+				record.employee_out = employee_out;
+
+				RentedAccessRecord.Employee employee_in = new RentedAccessRecord.Employee();
+				employee_in.id = results.getString("Employee_In_ID");
+				employee_in.firstName = results.getString("Employee_In_First_Name");
+				employee_in.lastName = results.getString("Employee_In_Last_Name");
+				record.employee_in = employee_in;
+
+				records.add(record);
+			}
+
+			RentedAccessRecord[] ret = new RentedAccessRecord[records.size()];
+			records.toArray(ret);
+			return ret;
+
+		} catch (IOException | SQLException | ClassNotFoundException e) {
+			throw new TransactionException(e);
+		} finally {
+			// Close all connections
+			closeConnections(connection, statement, results);
+		}
+	}
+
 	public static void log(String residentID, String accessID, Employee employee)
 			throws TransactionException {
 

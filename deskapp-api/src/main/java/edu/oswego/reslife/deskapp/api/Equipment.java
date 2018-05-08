@@ -79,6 +79,13 @@ public class Equipment {
 		}
 	}
 
+	/**
+	 * Returns a history of transactions for a given equipment.
+	 *
+	 * @param equipmentID The equipment to look up.
+	 * @return An array of RentedEquipmentRecords.
+	 * @throws TransactionException if there was any problem completing the transaction.
+	 */
 	public static RentedEquipmentRecord[] history(String equipmentID) throws TransactionException {
 		Connection connection = null;
 		PreparedStatement statement = null;
