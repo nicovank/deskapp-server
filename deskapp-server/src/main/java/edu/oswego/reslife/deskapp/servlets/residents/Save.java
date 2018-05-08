@@ -18,14 +18,14 @@ public class Save extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Employee user = ((Employee) request.getSession().getAttribute("user"));
+        Employee employee = ((Employee) request.getSession().getAttribute("user"));
 
         ObjectMapper mapper = new ObjectMapper();
         Resident data = mapper.readValue(request.getReader(), Resident.class);
 
         try {
 
-            if (!user.getPosition().equals(Employee.Position.RHD) && !user.getPosition().equals(Employee.Position.AHD)) {
+            if (!employee.getPosition().equals(Employee.Position.RHD) && !employee.getPosition().equals(Employee.Position.AHD)) {
                 throw new TransactionException("You do not have the right to perform this operation.");
             }
 
@@ -45,6 +45,7 @@ public class Save extends HttpServlet {
             response.getWriter().println("{}");
 
         } catch (TransactionException e) {
+            e.printStackTrace();
             e.writeMessageAsJson(response.getOutputStream());
         }
     }

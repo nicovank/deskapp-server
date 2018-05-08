@@ -182,7 +182,7 @@ public class Residents {
                 resident.setID(results.getString("ID"));
                 resident.setFirstName(results.getString("First_Name"));
                 resident.setLastName(results.getString("Last_Name"));
-                resident.setBuilding(results.getString("Building"));
+                resident.setBuilding(results.getString("Building_ID"));
                 resident.setEmail(results.getString("Email"));
                 resident.setRoomNb(results.getString("Room_Num"));
 
