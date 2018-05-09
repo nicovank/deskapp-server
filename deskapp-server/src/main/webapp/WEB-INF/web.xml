@@ -11,6 +11,16 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>DeleteEquipment</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.equipment.Delete</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SaveEquipment</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.equipment.Save</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>AddMessage</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.communication.AddMessage</servlet-class>
 	</servlet>
@@ -106,6 +116,16 @@
 	<servlet-mapping>
 		<servlet-name>ListMessages</servlet-name>
 		<url-pattern>/api/communication/list</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>DeleteEquipment</servlet-name>
+		<url-pattern>/api/equipment/delete</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SaveEquipment</servlet-name>
+		<url-pattern>/api/equipment/save</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

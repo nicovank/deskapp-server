@@ -21,4 +21,8 @@ public class EquipmentModel {
     public String getCategory() {
         return category;
     }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
 }
