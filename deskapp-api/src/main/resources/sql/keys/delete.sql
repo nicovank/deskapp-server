@@ -1,0 +1,2 @@
+DELETE FROM Access
+WHERE ID = ?;

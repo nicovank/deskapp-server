@@ -1,6 +1,7 @@
 package edu.oswego.reslife.deskapp.api;
 
 import edu.oswego.reslife.deskapp.api.models.Employee;
+import edu.oswego.reslife.deskapp.api.models.Access;;
 import edu.oswego.reslife.deskapp.api.models.RentedAccessRecord;
 import edu.oswego.reslife.deskapp.api.models.Status;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
@@ -279,5 +280,69 @@ public class Keys {
 			// Close all connections
 			closeConnections(connection, statement, results);
 		}
+	}
+
+	/**
+     * Creates a new access in the database.
+     *
+     * @param access the iem to create.
+     * @return true if the transaction was successful (i.e. there was no
+     * access with that ID).
+     * @throws TransactionException if there was any problem completing the
+     * transaction.
+     */
+    public static boolean create(Access access)
+            throws TransactionException {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = SQLConnection.getSQLConnection();
+            SQLQueryManager manager = SQLConnection.getManager();
+
+            statement = connection.prepareStatement(manager.getSQLQuery("keys.create"));
+            statement.setString(1, access.getID());
+			statement.setString(2, access.getBuilding());
+			statement.setString(3, access.getType().name().toLowerCase());
+
+            return statement.executeUpdate() == 1;
+
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            throw new TransactionException(e);
+        } finally {
+            // Close all connections
+            closeConnections(connection, statement, null);
+        }
+    }
+
+    /**
+     * Deletes a given access from the database.
+     *
+     * @param accessID The access to delete.
+     * @return true if the access was successfully deleted.
+     * @throws TransactionException if there was any problem completing the
+     * transaction.
+     */
+    public static boolean delete(String accessID) throws TransactionException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+
+            connection = SQLConnection.getSQLConnection();
+            SQLQueryManager manager = SQLConnection.getManager();
+
+            statement = connection.prepareStatement(manager.getSQLQuery("keys.delete"));
+            statement.setString(1, accessID);
+
+            return statement.executeUpdate() == 1;
+
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            throw new TransactionException(e);
+        } finally {
+            // Close all connections
+            closeConnections(connection, statement, null);
+        }
 	}
 }
