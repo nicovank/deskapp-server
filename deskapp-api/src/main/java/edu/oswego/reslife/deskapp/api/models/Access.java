@@ -21,4 +21,8 @@ public class Access {
     public Type getType() {
         return type;
     }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
 }

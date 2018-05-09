@@ -40,7 +40,7 @@ public class Save extends HttpServlet {
 					throw new TransactionException("There was an error creating that equipment.");
 				}
 
-				System.out.printf("Equipment'%s' was created.%n", data.getID());
+				System.out.printf("Equipment '%s' was created.%n", data.getID());
 			}
 
 			response.getWriter().println("{}");

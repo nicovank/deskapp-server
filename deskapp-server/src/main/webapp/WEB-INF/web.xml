@@ -21,6 +21,16 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>DeleteKey</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.keys.Delete</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SaveKey</servlet-name>
+		<servlet-class>edu.oswego.reslife.deskapp.servlets.keys.Save</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>AddMessage</servlet-name>
 		<servlet-class>edu.oswego.reslife.deskapp.servlets.communication.AddMessage</servlet-class>
 	</servlet>
@@ -126,6 +136,16 @@
 	<servlet-mapping>
 		<servlet-name>SaveEquipment</servlet-name>
 		<url-pattern>/api/equipment/save</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>DeleteKey</servlet-name>
+		<url-pattern>/api/keys/delete</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SaveKey</servlet-name>
+		<url-pattern>/api/keys/save</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
