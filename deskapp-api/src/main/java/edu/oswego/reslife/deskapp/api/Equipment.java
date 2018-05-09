@@ -1,6 +1,7 @@
 package edu.oswego.reslife.deskapp.api;
 
 import edu.oswego.reslife.deskapp.api.models.Employee;
+import edu.oswego.reslife.deskapp.api.models.EquipmentModel;
 import edu.oswego.reslife.deskapp.api.models.RentedEquipmentRecord;
 import edu.oswego.reslife.deskapp.api.models.Status;
 import edu.oswego.reslife.deskapp.api.sql.SQLConnection;
@@ -280,4 +281,133 @@ public class Equipment {
 			closeConnections(connection, statement, results);
 		}
 	}
+
+	/**
+     * Creates a new item in the database.
+     *
+     * @param item the iem to create.
+     * @return true if the transaction was successful (i.e. there was no
+     * item with that ID).
+     * @throws TransactionException if there was any problem completing the
+     * transaction.
+     */
+    public static boolean create(EquipmentModel item)
+            throws TransactionException {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = SQLConnection.getSQLConnection();
+            SQLQueryManager manager = SQLConnection.getManager();
+
+            statement = connection.prepareStatement(manager.getSQLQuery("equipment.create"));
+            statement.setString(1, item.getID());
+			statement.setString(2, item.getBuilding());
+			statement.setString(3, item.getName());
+			statement.setString(4, item.getCategory());
+
+            return statement.executeUpdate() == 1;
+
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            throw new TransactionException(e);
+        } finally {
+            // Close all connections
+            closeConnections(connection, statement, null);
+        }
+    }
+
+    /**
+     * Updates an existing item.
+     *
+     * @param item The information to override the current record with.
+     * @return true if the transaction was successful, else false.
+     * @throws TransactionException if there was any problem completing the
+     * transaction.
+     */
+    public static boolean update(EquipmentModel item)
+            throws TransactionException {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = SQLConnection.getSQLConnection();
+            SQLQueryManager manager = SQLConnection.getManager();
+
+            statement = connection.prepareStatement(manager.getSQLQuery("equipment.update"));
+            statement.setString(1, item.getName());
+            statement.setString(2, item.getCategory());
+            statement.setString(3, item.getCategory());
+
+            return statement.executeUpdate() == 1;
+
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            throw new TransactionException(e);
+        } finally {
+            // Close all connections
+            closeConnections(connection, statement, null);
+        }
+    }
+
+    /**
+     * Deletes a given item from the database.
+     *
+     * @param itemID The item to delete.
+     * @return true if the item was successfully deleted.
+     * @throws TransactionException if there was any problem completing the
+     * transaction.
+     */
+    public static boolean delete(String itemID) throws TransactionException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+
+            connection = SQLConnection.getSQLConnection();
+            SQLQueryManager manager = SQLConnection.getManager();
+
+            statement = connection.prepareStatement(manager.getSQLQuery("equipment.delete"));
+            statement.setString(1, itemID);
+
+            return statement.executeUpdate() == 1;
+
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            throw new TransactionException(e);
+        } finally {
+            // Close all connections
+            closeConnections(connection, statement, null);
+        }
+	}
+	
+	/**
+     * Checks if a item's ID exists in the database.
+     *
+     * @param id The ID to check for.
+     * @return true if the ID already exists, else false.
+     * @throws TransactionException TransactionException if there was any
+     * problem completing the transaction.
+     */
+    public static boolean exists(String id) throws TransactionException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet results = null;
+
+        try {
+            connection = SQLConnection.getSQLConnection();
+            SQLQueryManager manager = SQLConnection.getManager();
+
+            statement = connection.prepareStatement(manager.getSQLQuery("equipment.exists"));
+            statement.setString(1, id);
+
+            results = statement.executeQuery();
+            return results.next();
+
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            throw new TransactionException(e);
+        } finally {
+            // Close all connections
+            closeConnections(connection, statement, results);
+        }
+    }
 }

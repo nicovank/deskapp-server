@@ -1,12 +1,9 @@
 package edu.oswego.reslife.deskapp.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.mindrot.jbcrypt.BCrypt;
-
 public class Employee {
 
 	/**
-	 * Position of the employee_out. Must be coherent with the constraint on the table.
+	 * Position of the employee. Must be coherent with the constraint on the table.
 	 */
 	public enum Position {
 		RHD, AHD, RA, DA
