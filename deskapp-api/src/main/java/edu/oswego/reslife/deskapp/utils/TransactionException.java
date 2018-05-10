@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Writer;
 
 public class TransactionException extends Exception {
 
@@ -45,9 +46,17 @@ public class TransactionException extends Exception {
 	}
 
 	/**
-	 * Writes the message to the standard output stream.
+	 * Writes the message to the given output stream.
 	 */
 	public void writeMessageAsJson(OutputStream out) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue(out, new JSONMessage(message));
+	}
+
+	/**
+	 * Writes the message to a writer.
+	 */
+	public void writeMessageAsJson(Writer out) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.writeValue(out, new JSONMessage(message));
 	}

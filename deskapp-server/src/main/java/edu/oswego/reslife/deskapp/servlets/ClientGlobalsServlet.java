@@ -2,7 +2,10 @@ package edu.oswego.reslife.deskapp.servlets;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.oswego.reslife.deskapp.api.Employees;
 import edu.oswego.reslife.deskapp.api.models.Employee;
+import edu.oswego.reslife.deskapp.utils.TransactionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +24,13 @@ public class ClientGlobalsServlet extends HttpServlet {
 		@JsonProperty("token")
 		String token;
 
-		public GlobalsData(Employee employee, String token) {
+		@JsonProperty("employees")
+		Employee[] employees;
+
+		public GlobalsData(Employee employee, String token, Employee[] employees) {
 			this.employee = employee;
 			this.token = token;
+			this.employees = employees;
 		}
 	}
 
@@ -36,10 +43,15 @@ public class ClientGlobalsServlet extends HttpServlet {
 
 		Employee employee = (Employee) request.getSession().getAttribute("user");
 		String token = UUID.randomUUID().toString();
-
 		request.getSession().setAttribute("token", token);
 
-		out.println("window.globals = ");
-		mapper.writeValue(out, new GlobalsData(employee, token));
+		try {
+			Employee[] employees = Employees.list(employee.getBuilding());
+			out.println("window.globals = ");
+			mapper.writeValue(out, new GlobalsData(employee, token, employees));
+		} catch (TransactionException e) {
+			e.writeMessageAsJson(out);
+		}
+
 	}
 }
