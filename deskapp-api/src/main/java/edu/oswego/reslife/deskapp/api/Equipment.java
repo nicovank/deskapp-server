@@ -415,6 +415,7 @@ public class Equipment {
 
             statement = connection.prepareStatement(manager.getSQLQuery("equipment.delete"));
             statement.setString(1, itemID);
+			statement.setString(2, itemID);
 
             return statement.executeUpdate() == 1;
 

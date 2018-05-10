@@ -22,7 +22,15 @@ public class Access {
         return type;
     }
 
+    public void setID(String id) {
+        this.id = id;
+    }
+
     public void setBuilding(String building) {
         this.building = building;
+    }
+
+    public void setType(String type) {
+        this.type = Type.valueOf(type.toUpperCase());
     }
 }

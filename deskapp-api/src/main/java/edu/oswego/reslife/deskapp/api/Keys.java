@@ -81,6 +81,51 @@ public class Keys {
 	}
 
 	/**
+	 * Finds all keys for a given building.
+	 *
+	 * @param buildingID the building to search keys for.
+	 * @return an array of access items.
+	 * @throws TransactionException if there was any problem completing the transaction.
+	 */
+	public static Access[] list(String buildingID) throws TransactionException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet results = null;
+
+		try {
+
+			connection = SQLConnection.getSQLConnection();
+			SQLQueryManager manager = SQLConnection.getManager();
+
+			statement = connection.prepareStatement(manager.getSQLQuery("keys.list"));
+			statement.setString(1, buildingID);
+			results = statement.executeQuery();
+
+			ArrayList<Access> records = new ArrayList<>();
+
+			while (results.next()) {
+				Access record = new Access();
+
+				record.setID(results.getString("ID"));
+				record.setBuilding(results.getString("Building_ID"));
+				record.setType(results.getString("Type"));
+
+				records.add(record);
+			}
+
+			Access[] ret = new Access[records.size()];
+			records.toArray(ret);
+			return ret;
+
+		} catch (IOException | SQLException | ClassNotFoundException e) {
+			throw new TransactionException(e);
+		} finally {
+			// Close all connections
+			closeConnections(connection, statement, results);
+		}
+	}
+
+	/**
 	 * Returns a history of transactions for a given key.
 	 *
 	 * @param accessID The equipment to look up.
@@ -334,7 +379,8 @@ public class Keys {
             SQLQueryManager manager = SQLConnection.getManager();
 
             statement = connection.prepareStatement(manager.getSQLQuery("keys.delete"));
-            statement.setString(1, accessID);
+			statement.setString(1, accessID);
+			statement.setString(2, accessID);
 
             return statement.executeUpdate() == 1;
 
