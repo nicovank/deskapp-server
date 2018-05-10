@@ -22,7 +22,19 @@ public class EquipmentModel {
         return category;
     }
 
+    public void setID(String id) {
+        this.id = id;
+    }
+
     public void setBuilding(String building) {
         this.building = building;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -81,6 +81,52 @@ public class Equipment {
 	}
 
 	/**
+	 * Finds all equipment for a given building.
+	 *
+	 * @param buildingID the building to search equipment for.
+	 * @return an array of equipment items.
+	 * @throws TransactionException if there was any problem completing the transaction.
+	 */
+	public static EquipmentModel[] list(String buildingID) throws TransactionException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet results = null;
+
+		try {
+
+			connection = SQLConnection.getSQLConnection();
+			SQLQueryManager manager = SQLConnection.getManager();
+
+			statement = connection.prepareStatement(manager.getSQLQuery("equipment.list"));
+			statement.setString(1, buildingID);
+			results = statement.executeQuery();
+
+			ArrayList<EquipmentModel> records = new ArrayList<>();
+
+			while (results.next()) {
+				EquipmentModel record = new EquipmentModel();
+
+				record.setID(results.getString("ID"));
+				record.setBuilding(results.getString("Building_ID"));
+				record.setName(results.getString("Name"));
+				record.setCategory(results.getString("Category"));
+
+				records.add(record);
+			}
+
+			EquipmentModel[] ret = new EquipmentModel[records.size()];
+			records.toArray(ret);
+			return ret;
+
+		} catch (IOException | SQLException | ClassNotFoundException e) {
+			throw new TransactionException(e);
+		} finally {
+			// Close all connections
+			closeConnections(connection, statement, results);
+		}
+	}
+
+	/**
 	 * Returns a history of transactions for a given equipment.
 	 *
 	 * @param equipmentID The equipment to look up.
@@ -338,7 +384,7 @@ public class Equipment {
             statement = connection.prepareStatement(manager.getSQLQuery("equipment.update"));
             statement.setString(1, item.getName());
             statement.setString(2, item.getCategory());
-            statement.setString(3, item.getCategory());
+            statement.setString(3, item.getID());
 
             return statement.executeUpdate() == 1;
 

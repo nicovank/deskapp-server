@@ -46,6 +46,7 @@ public class Save extends HttpServlet {
 			response.getWriter().println("{}");
 
 		} catch (TransactionException e) {
+			e.printStackTrace();
 			e.writeMessageAsJson(response.getOutputStream());
 		}
 	}

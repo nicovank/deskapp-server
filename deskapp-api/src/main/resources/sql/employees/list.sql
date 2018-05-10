@@ -8,4 +8,6 @@ SELECT
 
 FROM Employees
 WHERE Building_ID = ?
-AND Active = 'yes';
+AND Active = 'yes'
+
+ORDER BY Last_Name;
