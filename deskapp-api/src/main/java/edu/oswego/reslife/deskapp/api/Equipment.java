@@ -407,6 +407,7 @@ public class Equipment {
     public static boolean delete(String itemID) throws TransactionException {
         Connection connection = null;
         PreparedStatement statement = null;
+        PreparedStatement statement2 = null;
 
         try {
 
@@ -415,7 +416,10 @@ public class Equipment {
 
             statement = connection.prepareStatement(manager.getSQLQuery("equipment.delete"));
             statement.setString(1, itemID);
-			statement.setString(2, itemID);
+
+            statement2 = connection.prepareStatement(manager.getSQLQuery("equipment.deleteHistory"));
+            statement2.setString(1, itemID);
+			statement2.executeUpdate();
 
             return statement.executeUpdate() == 1;
 
@@ -423,7 +427,8 @@ public class Equipment {
             throw new TransactionException(e);
         } finally {
             // Close all connections
-            closeConnections(connection, statement, null);
+			closeConnections(connection, statement, null);
+			closeConnections(connection, statement2, null);
         }
 	}
 	

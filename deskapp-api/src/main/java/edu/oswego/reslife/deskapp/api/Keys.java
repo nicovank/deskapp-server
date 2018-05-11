@@ -371,7 +371,8 @@ public class Keys {
      */
     public static boolean delete(String accessID) throws TransactionException {
         Connection connection = null;
-        PreparedStatement statement = null;
+		PreparedStatement statement = null;
+		PreparedStatement statement2 = null;
 
         try {
 
@@ -380,7 +381,10 @@ public class Keys {
 
             statement = connection.prepareStatement(manager.getSQLQuery("keys.delete"));
 			statement.setString(1, accessID);
-			statement.setString(2, accessID);
+
+			statement2 = connection.prepareStatement(manager.getSQLQuery("keys.deleteHistory"));
+			statement2.setString(1, accessID);
+			statement2.executeUpdate();
 
             return statement.executeUpdate() == 1;
 
@@ -388,7 +392,8 @@ public class Keys {
             throw new TransactionException(e);
         } finally {
             // Close all connections
-            closeConnections(connection, statement, null);
+			closeConnections(connection, statement, null);
+			closeConnections(connection, statement2, null);
         }
 	}
 }
